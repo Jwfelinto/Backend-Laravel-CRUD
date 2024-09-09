@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+    app:
+        build:
+            context: .
+            dockerfile: .docker/Dockerfile  # Caminho correto para o Dockerfile
+        container_name: 77sol-app
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+            - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        networks:
+            - laravel
+        ports:
+            - "8000:8000"  # Mapeia a porta 8000 do Laravel para a máquina local
+
+    mysql:
+        image: mysql:8.0
+        container_name: 77sol-mysql
+        environment:
+            MYSQL_ROOT_PASSWORD:
+            MYSQL_DATABASE: 77-sol
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        volumes:
+            - mysql_data:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        networks:
+            - laravel
+
+networks:
+    laravel:
+        driver: bridge
+
+volumes:
+    mysql_data:
+        driver: local
