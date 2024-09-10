@@ -14,4 +14,10 @@ class Project extends Model
         'location_id',
         'installation_type_id',
     ];
+
+    public function tools()
+    {
+        return $this->belongsToMany(Tool::class, 'project_tools')
+            ->withPivot('quantity');
+    }
 }
