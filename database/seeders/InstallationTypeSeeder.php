@@ -13,7 +13,7 @@ class InstallationTypeSeeder extends Seeder
     public function run(): void
     {
         foreach (InstallationType::TYPES as $type) {
-            InstallationType::firstOrCreate(['uf' => $type]);
+            InstallationType::firstOrCreate(['name' => $type]);
         }
     }
 }
