@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\InstallationType;
 use App\Models\Location;
 use App\Models\Project;
+use App\Models\Tool;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,5 +26,18 @@ class ProjectFactory extends Factory
             'location_id' => Location::inRandomOrder()->first()->id,
             'installation_type_id' => InstallationType::inRandomOrder()->first()->id,
         ];
+    }
+
+    /**
+     * Create tools associated with the project.
+     */
+    public function withTools(int $count = 3): self
+    {
+        return $this->afterCreating(function (Project $project) use ($count) {
+            $tools = Tool::inRandomOrder()->take($count)->pluck('id');
+            $project->tools()->attach($tools, [
+                'quantity' => $this->faker->numberBetween(1, 10),
+            ]);
+        });
     }
 }
