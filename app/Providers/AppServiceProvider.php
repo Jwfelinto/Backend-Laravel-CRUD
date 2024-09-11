@@ -6,8 +6,10 @@ use App\Repositories\ClientRepository;
 use App\Repositories\InstallationTypeRepository;
 use App\Repositories\Interfaces\ClientRepositoryInterface;
 use App\Repositories\Interfaces\InstallationTypeRepositoryInterface;
+use App\Repositories\Interfaces\LocationRepositoryInterface;
 use App\Repositories\Interfaces\ProjectRepositoryInterface;
 use App\Repositories\Interfaces\ToolRepositoryInterface;
+use App\Repositories\LocationRepository;
 use App\Repositories\ProjectRepository;
 use App\Repositories\ToolRepository;
 use Illuminate\Support\ServiceProvider;
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ClientRepositoryInterface::class, ClientRepository::class);
         $this->app->bind(InstallationTypeRepositoryInterface::class, InstallationTypeRepository::class);
         $this->app->bind(ToolRepositoryInterface::class, ToolRepository::class);
+        $this->app->bind(LocationRepositoryInterface::class, LocationRepository::class);
 
     }
 
