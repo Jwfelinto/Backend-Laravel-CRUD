@@ -41,11 +41,19 @@ class ClientController extends Controller
         return ClientResource::collection($clients);
     }
 
+    /**
+     * @param Client $client
+     * @return JsonResource
+     */
     public function show(Client $client): JsonResource
     {
         return new ClientResource($client);
     }
 
+    /**
+     * @param ClientRequest $request
+     * @return JsonResponse
+     */
     public function store(ClientRequest $request): JsonResponse
     {
         $this->clientService->createClient($request->validated());
@@ -55,6 +63,11 @@ class ClientController extends Controller
         ]);
     }
 
+    /**
+     * @param ClientRequest $request
+     * @param Client $client
+     * @return JsonResponse
+     */
     public function update(ClientRequest $request, Client $client): JsonResponse
     {
         $result = $this->clientService->updateClient($request->validated(), $client);
@@ -65,6 +78,10 @@ class ClientController extends Controller
         ]);
     }
 
+    /**
+     * @param Client $client
+     * @return JsonResponse
+     */
     public function destroy(Client $client): JsonResponse
     {
         $client->delete();

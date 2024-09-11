@@ -9,11 +9,19 @@ use Illuminate\Database\Eloquent\Collection;
 class ProjectService
 {
     private ProjectRepositoryInterface $projectRepository;
+
+    /**
+     * @param ProjectRepositoryInterface $projectRepository
+     */
     public function __construct(ProjectRepositoryInterface $projectRepository)
     {
         $this->projectRepository = $projectRepository;
     }
 
+    /**
+     * @param array|null $data
+     * @return Collection
+     */
     public function getProjects(?array $data): Collection
     {
         $filters = $this->checkFilters($data);
@@ -21,6 +29,10 @@ class ProjectService
         return $this->projectRepository->all($filters);
     }
 
+    /**
+     * @param array $data
+     * @return Project
+     */
     public function createProject(array $data): Project
     {
         $project = new Project([
@@ -40,6 +52,11 @@ class ProjectService
         return $this->projectRepository->create($project, $tools);
     }
 
+    /**
+     * @param array $data
+     * @param Project $project
+     * @return Project
+     */
     public function updateProject(array $data, Project $project)
     {
         $project->client_id = $data['client_id'];
@@ -56,6 +73,11 @@ class ProjectService
         return $this->projectRepository->update($project, $tools);
 
     }
+
+    /**
+     * @param array|null $data
+     * @return array
+     */
     private function checkFilters(?array $data): array
     {
         return [
@@ -68,5 +90,4 @@ class ProjectService
             'end_date' => $data['end_date'] ?? null,
         ];
     }
-
 }

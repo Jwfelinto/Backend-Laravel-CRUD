@@ -23,11 +23,19 @@ class ProjectController extends Controller
     ];
 
     private ProjectService $projectService;
+
+    /**
+     * @param ProjectService $projectService
+     */
     public function __construct(ProjectService $projectService)
     {
         $this->projectService = $projectService;
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResource
+     */
     public function index(Request $request): JsonResource
     {
         $filters = $request->only(self::FILTERS);
@@ -36,11 +44,19 @@ class ProjectController extends Controller
         return ProjectResource::collection($projects);
     }
 
+    /**
+     * @param Project $project
+     * @return JsonResource
+     */
     public function show(Project $project): JsonResource
     {
         return new ProjectResource($project);
     }
 
+    /**
+     * @param ProjectRequest $request
+     * @return JsonResponse
+     */
     public function store(ProjectRequest $request): JsonResponse
     {
         $this->projectService->createProject($request->validated());
@@ -50,6 +66,11 @@ class ProjectController extends Controller
         ]);
     }
 
+    /**
+     * @param ProjectRequest $request
+     * @param Project $project
+     * @return JsonResponse
+     */
     public function update(ProjectRequest $request, Project $project): JsonResponse
     {
         $result = $this->projectService->updateProject($request->validated(), $project);
@@ -60,6 +81,10 @@ class ProjectController extends Controller
         ]);
     }
 
+    /**
+     * @param Project $project
+     * @return JsonResponse
+     */
     public function destroy(Project $project): JsonResponse
     {
         $project->delete();

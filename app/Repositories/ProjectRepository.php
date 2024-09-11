@@ -14,11 +14,18 @@ class ProjectRepository implements ProjectRepositoryInterface
     /**
      * @param Project $projects
      */
+    /**
+     * @param Project $projects
+     */
     public function __construct(Project $projects)
     {
         $this->projects = $projects;
     }
 
+    /**
+     * @param array|null $filters
+     * @return Collection
+     */
     public function all(?array $filters): Collection
     {
         $query = $this->projects->with(['client', 'location', 'tools', 'installationType']);
@@ -27,6 +34,11 @@ class ProjectRepository implements ProjectRepositoryInterface
         return $result->latest()->get();
     }
 
+    /**
+     * @param Project $project
+     * @param array $tools
+     * @return Project
+     */
     public function create(Project $project, array $tools): Project
     {
         $project->save();
@@ -35,6 +47,11 @@ class ProjectRepository implements ProjectRepositoryInterface
         return $project;
     }
 
+    /**
+     * @param Project $project
+     * @param array $tools
+     * @return Project
+     */
     public function update(Project $project, array $tools): Project
     {
         $project->save();
@@ -42,6 +59,12 @@ class ProjectRepository implements ProjectRepositoryInterface
 
         return $project;
     }
+
+    /**
+     * @param Builder $query
+     * @param array $filters
+     * @return Builder
+     */
     private function applyFilters(Builder $query, array $filters): Builder
     {
         $query = $this->filterClient($query, $filters['client']);
@@ -54,6 +77,11 @@ class ProjectRepository implements ProjectRepositoryInterface
         return $query;
     }
 
+    /**
+     * @param Builder $query
+     * @param string|null $date
+     * @return Builder
+     */
     private function filterDate(Builder $query, ?string $date): Builder
     {
         return $query->when($date, function (Builder $query, $date) {
@@ -61,6 +89,12 @@ class ProjectRepository implements ProjectRepositoryInterface
         });
     }
 
+    /**
+     * @param Builder $query
+     * @param string|null $startDate
+     * @param string|null $endDate
+     * @return Builder
+     */
     private function filterBetweenDate(Builder $query, ?string $startDate, ?string $endDate): Builder
     {
         return $query->when(($startDate) && ($endDate), function (Builder $query) use ($startDate, $endDate) {
@@ -71,6 +105,11 @@ class ProjectRepository implements ProjectRepositoryInterface
         });
     }
 
+    /**
+     * @param Builder $query
+     * @param int|null $tools
+     * @return Builder
+     */
     private function filterTools(Builder $query, ?int $tools): Builder
     {
         return $query->when($tools, function (Builder $query) use ($tools) {
@@ -81,6 +120,11 @@ class ProjectRepository implements ProjectRepositoryInterface
             });
     }
 
+    /**
+     * @param Builder $query
+     * @param int|null $location
+     * @return Builder
+     */
     private function filterLocation(Builder $query, ?int $location): Builder
     {
         return $query->when($location, function (Builder $query, $location) {
@@ -88,6 +132,11 @@ class ProjectRepository implements ProjectRepositoryInterface
         });
     }
 
+    /**
+     * @param Builder $query
+     * @param int|null $client
+     * @return Builder
+     */
     private function filterClient(Builder $query, ?int $client): Builder
     {
         return $query->when($client, function (Builder $query, $client) {
@@ -95,6 +144,11 @@ class ProjectRepository implements ProjectRepositoryInterface
         });
     }
 
+    /**
+     * @param Builder $query
+     * @param int|null $installationType
+     * @return Builder
+     */
     private function filterInstallationsType(Builder $query, ?int $installationType): Builder
     {
         return $query->when($installationType, function (Builder $query, $installationType) {
