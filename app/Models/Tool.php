@@ -34,7 +34,4 @@ class Tool extends Model
         Tool::CABO_TRONCO,
         Tool::ENDCAP
     ];
-
-
-
 }
