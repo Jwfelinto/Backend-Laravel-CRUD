@@ -23,9 +23,20 @@ class ProjectFactory extends Factory
     {
         return [
             'client_id' => Client::factory(),
-            'location_id' => Location::inRandomOrder()->first()->id,
-            'installation_type_id' => InstallationType::inRandomOrder()->first()->id,
+            'location_id' => Location::factory(),
+            'installation_type_id' => InstallationType::factory(),
         ];
+    }
+
+    public function withExistingData(): self
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'client_id' => Client::factory(),
+                'location_id' => Location::inRandomOrder()->first()->id,
+                'installation_type_id' => InstallationType::inRandomOrder()->first()->id,
+            ];
+        });
     }
 
     /**
@@ -40,4 +51,7 @@ class ProjectFactory extends Factory
             ]);
         });
     }
+
+    // Define um state para usar registros existentes de Location e InstallationType
+
 }

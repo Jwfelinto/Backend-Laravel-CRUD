@@ -14,6 +14,7 @@ class ProjectSeeder extends Seeder
     {
         Project::factory()
             ->count(10)
+            ->withExistingData()
             ->withTools(3)
             ->create();
     }
