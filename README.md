@@ -94,9 +94,9 @@ php artisan test
 
 Atualmente, há testes para a model `Project`, `Client` e `InstallationType`. Pretendo finalizar os testes assim que estiver com um tempinho disponível.
 
-## Contribuição
+<!--## Contribuição
 
-Contribuições são bem-vindas! Se você encontrar algum problema ou tiver sugestões, sinta-se à vontade para abrir uma issue ou enviar um pull request.
+Contribuições são bem-vindas! Se você encontrar algum problema ou tiver sugestões, sinta-se à vontade para abrir uma issue ou enviar um pull request.-->
 
 ## Licença
 
