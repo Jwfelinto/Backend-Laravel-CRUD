@@ -5,7 +5,7 @@ services:
             context: .
             dockerfile: .docker/Dockerfile  # Caminho correto para o Dockerfile
         container_name: 77sol-app
-        working_dir: /var/www
+        working_dir: /var/app/current
         volumes:
             - .:/var/app/current
             - /var/app/current/vendor
@@ -25,3 +25,8 @@ services:
             - mysql_data:/var/lib/mysql
         ports:
             - "3306:3306"
+volumes:
+    mysql_data:  # Declarar o volume para MySQL
+
+networks:
+    laravel:
