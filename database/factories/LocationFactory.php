@@ -22,7 +22,7 @@ class LocationFactory extends Factory
     public function definition(): array
     {
         return [
-            'uf' => $this->faker->randomElement(Location::UFS),
+            'uf' => $this->faker->unique()->randomElement(Location::UFS),
         ];
     }
 }
