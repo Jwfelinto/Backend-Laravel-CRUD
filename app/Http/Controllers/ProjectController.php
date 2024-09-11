@@ -46,7 +46,7 @@ class ProjectController extends Controller
         $this->projectService->createProject($request->validated());
 
         return response()->json([
-            'message' => 'Processo criado com sucesso!'
+            'message' => 'Project successfully created!'
         ]);
     }
 
@@ -55,7 +55,7 @@ class ProjectController extends Controller
         $result = $this->projectService->updateProject($request->validated(), $project);
 
         return response()->json([
-            'message' => 'Processo atualizado com sucesso!',
+            'message' => 'Project successfully updated!',
             'data' => new ProjectResource($result)
         ]);
     }
@@ -65,7 +65,7 @@ class ProjectController extends Controller
         $project->delete();
 
         return response()->json([
-            'message' => 'Processo excluído com sucesso!'
+            'message' => 'Project successfully deleted!'
         ]);
     }
 }
