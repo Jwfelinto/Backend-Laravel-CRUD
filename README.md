@@ -1,66 +1,103 @@
+
+# Backend Laravel CRUD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+Este projeto é uma API desenvolvida em Laravel para gerenciamento de **Projetos** com funcionalidades de CRUD (Create, Read, Update, Delete). Ele segue uma arquitetura baseada em **Service**, **Repository** e **Interface**, garantindo uma separação clara das responsabilidades e um código mais organizado.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requisitos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP 8.0+
+- Composer
+- MySQL
+- Docker (opcional)
+- Postman (para testar as rotas da API)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Instalação
 
-## Learning Laravel
+1. Clone o repositório:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+git clone https://github.com/Jwfelinto/Backend-Laravel-CRUD.git
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Instale as dependências:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+composer install
+```
 
-## Laravel Sponsors
+3. Configure o arquivo `.env` com as informações do banco de dados:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-### Premium Partners
+4. Execute as migrations e seeders para configurar o banco de dados:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+php artisan migrate --seed
+```
 
-## Contributing
+5. Inicie o servidor local do Laravel:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+php artisan serve
+```
 
-## Code of Conduct
+Se estiver usando Docker, use o seguinte comando para iniciar o ambiente de desenvolvimento:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+docker-compose up -d
+```
 
-## Security Vulnerabilities
+## Documentação da API
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+A documentação da API foi gerada utilizando o pacote **Swagger**. Para acessar a documentação, siga os passos abaixo:
 
-## License
+1. Execute o comando para publicar a configuração do Swagger:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
+```
+
+2. Gere a documentação Swagger:
+
+```bash
+php artisan l5-swagger:generate
+```
+
+3. Acesse a documentação no navegador através do caminho:
+
+```
+http://localhost:8000/api/documentation
+```
+
+## Estrutura do Projeto
+
+- **App/Services**: Contém as regras de negócio e lógica de aplicação.
+- **App/Repositories**: Responsável pela comunicação com o banco de dados, utilizando o padrão Repository.
+- **App/Interfaces**: Define contratos para os repositórios.
+- **App/Http/Controllers**: Controladores responsáveis por manipular as requisições e respostas da API.
+- **App/Models**: Definição das entidades e relacionamentos do banco de dados.
+
+## Testes
+
+### Testes Unitários
+
+O projeto possui testes unitários que podem ser executados com o PHPUnit. Para rodar os testes:
+
+```bash
+php artisan test
+```
+
+Atualmente, há testes para a model `Project`, `Client` e `InstallationType`. Pretendo finalizar os testes assim que estiver com um tempinho disponível.
+
+## Contribuição
+
+Contribuições são bem-vindas! Se você encontrar algum problema ou tiver sugestões, sinta-se à vontade para abrir uma issue ou enviar um pull request.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT.
