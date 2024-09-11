@@ -26,4 +26,32 @@ class ProjectTest extends TestCase
         $this->assertDatabaseHas('projects', $projectData);
     }
 
+    public function test_project_has_a_location(): void
+    {
+        $location = Location::factory()->create();
+        $project = Project::factory()->create([
+            'location_id' => $location->id,
+        ]);
+
+        $project = $project->load('location');
+
+        $this->assertNotNull($project->location);
+        $this->assertEquals($location->id, $project->location_id);
+        $this->assertEquals($location->name, $project->location->name);
+    }
+
+    public function test_project_has_an_installation_type(): void
+    {
+        $installationType = InstallationType::factory()->create();
+        $project = Project::factory()->create([
+            'installation_type_id' => $installationType->id,
+        ]);
+
+        $project = $project->load('installationType');
+
+        $this->assertNotNull($project->installationType);
+        $this->assertEquals($installationType->id, $project->installation_type_id);
+        $this->assertEquals($installationType->name, $project->installationType->name);
+    }
+
 }
