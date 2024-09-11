@@ -26,6 +26,20 @@ class ProjectTest extends TestCase
         $this->assertDatabaseHas('projects', $projectData);
     }
 
+    public function test_project_has_a_client(): void
+    {
+        $client = Client::factory()->create();
+        $project = Project::factory()->create([
+            'client_id' => $client->id,
+        ]);
+
+        $project = $project->load('client');
+
+        $this->assertNotNull($project->client);
+        $this->assertEquals($client->id, $project->client_id);
+        $this->assertEquals($client->name, $project->client->name);
+    }
+
     public function test_project_has_a_location(): void
     {
         $location = Location::factory()->create();
