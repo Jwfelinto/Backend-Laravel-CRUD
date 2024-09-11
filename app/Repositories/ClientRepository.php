@@ -41,7 +41,7 @@ class ClientRepository
         $query = $this->filterName($query, $filters['name'] ?? null);
         $query = $this->filterEmail($query, $filters['email']?? null);
         $query = $this->filterPhone($query, $filters['phone'] ?? null);
-        $query = $this->filterCpfOrCnpj($query, $filters['cpf/cnpj'] ?? null);
+        $query = $this->filterCpfOrCnpj($query, $filters['cpf_cnpj'] ?? null);
 
         return $query;
     }
@@ -70,7 +70,7 @@ class ClientRepository
     private function filterCpfOrCnpj(Builder $query, ?string $cpfOrCnpj): Builder
     {
         return $query->when($cpfOrCnpj, function (Builder $query, $cpfOrCnpj) {
-            return $query->where('cpf/cnpj', 'like', '%' . $cpfOrCnpj . '%');
+            return $query->where('cpf_cnpj', 'like', '%' . $cpfOrCnpj . '%');
         });
     }
 }

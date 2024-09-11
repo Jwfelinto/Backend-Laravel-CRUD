@@ -15,7 +15,7 @@ class ClientFactory extends Factory
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->phoneNumber,
-            'cpf/cnpj' => $this->faker->unique()->bothify('##########'),
+            'cpf_cnpj' => $this->faker->unique()->bothify('##########'),
         ];
     }
 }

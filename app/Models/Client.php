@@ -13,6 +13,6 @@ class Client extends Model
         'nome',
         'email',
         'phone',
-        'cpf/cnpj'
+        'cpf_cnpj'
     ];
 }
