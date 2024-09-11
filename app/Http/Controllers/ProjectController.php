@@ -2,65 +2,70 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProjectRequest;
-use App\Http\Requests\UpdateProjectRequest;
+use App\Http\Requests\ProjectRequest;
+use App\Http\Resources\ProjectResource;
 use App\Models\Project;
+use App\Services\ProjectService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private const FILTERS = [
+        'client',
+        'location',
+        'installation_type',
+        'tools',
+        'date',
+        'start_date',
+        'end_date',
+    ];
+
+    private ProjectService $projectService;
+    public function __construct(ProjectService $projectService)
     {
-        //
+        $this->projectService = $projectService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(Request $request): JsonResource
     {
-        //
+        $filters = $request->only(self::FILTERS);
+        $projects = $this->projectService->getProjects($filters);
+
+        return ProjectResource::collection($projects);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreProjectRequest $request)
+    public function show(Project $project): JsonResource
     {
-        //
+        return new ProjectResource($project);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Project $project)
+    public function store(ProjectRequest $request): JsonResponse
     {
-        //
+        $this->projectService->createProject($request->validated());
+
+        return response()->json([
+            'message' => 'Processo criado com sucesso!'
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Project $project)
+    public function update(ProjectRequest $request, Project $project): JsonResponse
     {
-        //
+        $result = $this->projectService->updateProject($request->validated(), $project);
+
+        return response()->json([
+            'message' => 'Processo atualizado com sucesso!',
+            'data' => new ProjectResource($result)
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateProjectRequest $request, Project $project)
+    public function destroy(Project $project): JsonResponse
     {
-        //
-    }
+        $project->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Project $project)
-    {
-        //
+        return response()->json([
+            'message' => 'Processo excluído com sucesso!'
+        ]);
     }
 }
