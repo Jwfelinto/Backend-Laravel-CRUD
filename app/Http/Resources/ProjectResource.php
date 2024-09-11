@@ -14,7 +14,10 @@ class ProjectResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        if ($request->routeIs('process.index')) {
+        if ($request->routeIs(
+            'project.index',
+            'client.show'
+        )) {
             return $this->toArrayCollection($request);
         }
 
@@ -34,8 +37,7 @@ class ProjectResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'installation_type' => $this->installationType->name,
-            'client' => $this->client->name
+            'installation_type' => $this->installationType->name
         ];
     }
 }
