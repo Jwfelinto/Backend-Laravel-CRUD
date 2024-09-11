@@ -17,7 +17,7 @@ class ClientRepository
 
     public function all(?array $filters): Collection
     {
-        $query = $this->clients;
+        $query = $this->clients->query();
         $result = $this->applyFilters($query, $filters);
 
         return $result->latest()->get();
@@ -38,10 +38,10 @@ class ClientRepository
     }
     private function applyFilters(Builder $query, array $filters): Builder
     {
-        $query = $this->filterName($query, $filters['name']);
-        $query = $this->filterEmail($query, $filters['email']);
-        $query = $this->filterPhone($query, $filters['phone']);
-        $query = $this->filterCpfOrCnpj($query, $filters['cpf/cnpj']);
+        $query = $this->filterName($query, $filters['name'] ?? null);
+        $query = $this->filterEmail($query, $filters['email']?? null);
+        $query = $this->filterPhone($query, $filters['phone'] ?? null);
+        $query = $this->filterCpfOrCnpj($query, $filters['cpf/cnpj'] ?? null);
 
         return $query;
     }
