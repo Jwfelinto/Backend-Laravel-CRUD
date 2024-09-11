@@ -9,7 +9,14 @@ use App\Services\ClientService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Tag(
+ *     name="Clients",
+ *     description="API Endpoints of Clients"
+ * )
+ */
 class ClientController extends Controller
 {
     private const FILTERS = [
@@ -30,6 +37,46 @@ class ClientController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/api/clients",
+     *     tags={"Clients"},
+     *     summary="List all clients",
+     *     description="Return a list of clients with optional filters",
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="Filter by client name",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="Filter by client email",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="phone",
+     *         in="query",
+     *         description="Filter by client phone",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="cpf_cnpj",
+     *         in="query",
+     *         description="Filter by client CPF or CNPJ",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/ClientResource"))
+     *     )
+     * )
+     *
      * @param Request $request
      * @return JsonResource
      */
@@ -42,6 +89,25 @@ class ClientController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/api/clients/{client}",
+     *     tags={"Clients"},
+     *     summary="Show a client",
+     *     description="Return a single client",
+     *     @OA\Parameter(
+     *         name="client",
+     *         in="path",
+     *         description="ID of the client to retrieve",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/ClientResource")
+     *     )
+     * )
+     *
      * @param Client $client
      * @return JsonResource
      */
@@ -51,6 +117,24 @@ class ClientController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *     path="/api/clients",
+     *     tags={"Clients"},
+     *     summary="Create a new client",
+     *     description="Create a new client",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/ClientRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Client successfully created",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Client successfully created!")
+     *         )
+     *     )
+     * )
+     *
      * @param ClientRequest $request
      * @return JsonResponse
      */
@@ -60,10 +144,36 @@ class ClientController extends Controller
 
         return response()->json([
             'message' => 'Client successfully created!'
-        ]);
+        ], 201);
     }
 
     /**
+     * @OA\Put(
+     *     path="/api/clients/{client}",
+     *     tags={"Clients"},
+     *     summary="Update an existing client",
+     *     description="Update an existing client",
+     *     @OA\Parameter(
+     *         name="client",
+     *         in="path",
+     *         description="ID of the client to update",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/ClientRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Client successfully updated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Client successfully updated!"),
+     *             @OA\Property(property="data", ref="#/components/schemas/ClientResource")
+     *         )
+     *     )
+     * )
+     *
      * @param ClientRequest $request
      * @param Client $client
      * @return JsonResponse
@@ -79,6 +189,27 @@ class ClientController extends Controller
     }
 
     /**
+     * @OA\Delete(
+     *     path="/api/clients/{client}",
+     *     tags={"Clients"},
+     *     summary="Delete a client",
+     *     description="Delete a client by its ID",
+     *     @OA\Parameter(
+     *         name="client",
+     *         in="path",
+     *         description="ID of the client to delete",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Client successfully deleted",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Client successfully deleted!")
+     *         )
+     *     )
+     * )
+     *
      * @param Client $client
      * @return JsonResponse
      */
