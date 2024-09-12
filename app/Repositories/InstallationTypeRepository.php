@@ -3,9 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\InstallationType;
+use App\Repositories\Interfaces\InstallationTypeRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class InstallationTypeRepository
+class InstallationTypeRepository implements InstallationTypeRepositoryInterface
 {
     private InstallationType $installationType;
 

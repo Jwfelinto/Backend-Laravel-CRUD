@@ -3,9 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\Location;
+use App\Repositories\Interfaces\LocationRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class LocationRepository
+class LocationRepository implements LocationRepositoryInterface
 {
     private Location $locations;
 

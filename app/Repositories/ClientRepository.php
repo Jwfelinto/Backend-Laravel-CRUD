@@ -3,10 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Client;
+use App\Repositories\Interfaces\ClientRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-class ClientRepository
+class ClientRepository implements ClientRepositoryInterface
 {
     private Client $clients;
 

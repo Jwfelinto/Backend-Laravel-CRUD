@@ -3,9 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\Tool;
+use App\Repositories\Interfaces\ToolRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class ToolRepository
+class ToolRepository implements ToolRepositoryInterface
 {
     private Tool $tools;
 
