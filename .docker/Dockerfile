@@ -1,21 +1,32 @@
-FROM php:8.3-cli
+FROM php:8.3-fpm
 
-WORKDIR /var/app/current
-
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y \
+    default-mysql-client \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libpq-dev \
     git \
+    unzip \
     curl \
-    libzip-dev \
-    zip \
-    unzip
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd \
+    && docker-php-ext-install pdo pdo_mysql \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo_mysql zip
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+WORKDIR /var/www/html
 
+COPY composer.json composer.lock ./
+RUN composer install --no-autoloader --no-scripts
 
-COPY . /var/app/current
+COPY . .
 
-RUN chown -R www-data:www-data //var/app/current
+RUN composer dump-autoload --optimize
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+EXPOSE 9000
+
+CMD ["php-fpm"]

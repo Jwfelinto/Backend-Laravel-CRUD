@@ -3,7 +3,7 @@ services:
     app:
         build:
             context: .
-            dockerfile: .docker/Dockerfile  # Caminho correto para o Dockerfile
+            dockerfile: .docker/Dockerfile
         container_name: 77sol-app
         working_dir: /var/app/current
         volumes:
@@ -11,8 +11,10 @@ services:
             - /var/app/current/vendor
         networks:
             - laravel
+        depends_on:
+            - mysql
         ports:
-            - "8000:8000"  # Mapeia a porta 8000 do Laravel para a máquina local
+            - "9000:9000"
 
     mysql:
         image: mysql:8.0
@@ -25,8 +27,10 @@ services:
             - mysql_data:/var/lib/mysql
         ports:
             - "3306:3306"
+        networks:
+            - laravel
 volumes:
-    mysql_data:  # Declarar o volume para MySQL
+    mysql_data:
 
 networks:
     laravel:
