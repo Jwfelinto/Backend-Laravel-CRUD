@@ -34,23 +34,24 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-4. Execute as migrations e seeders para configurar o banco de dados:
-
-```bash
-php artisan migrate --seed
-```
-
-5. Inicie o servidor local do Laravel:
+4. Inicie o servidor local do Laravel:
 
 ```bash
 php artisan serve
 ```
 
-Se estiver usando Docker, use o seguinte comando para iniciar o ambiente de desenvolvimento:
+5. Se estiver usando Docker, use o seguinte comando para iniciar o ambiente de desenvolvimento:
 
 ```bash
-docker-compose up -d
+docker-compose up --build
 ```
+
+6. Execute as migrations e seeders para configurar o banco de dados:
+
+```bash
+php artisan migrate --seed
+```
+
 
 ## Documentação da API
 
@@ -94,9 +95,9 @@ php artisan test
 
 Atualmente, há testes para a model `Project`, `Client` e `InstallationType`. Pretendo finalizar os testes assim que estiver com um tempinho disponível.
 
-## Contribuição
+<!--## Contribuição
 
-Contribuições são bem-vindas! Se você encontrar algum problema ou tiver sugestões, sinta-se à vontade para abrir uma issue ou enviar um pull request.
+Contribuições são bem-vindas! Se você encontrar algum problema ou tiver sugestões, sinta-se à vontade para abrir uma issue ou enviar um pull request.-->
 
 ## Licença
 
