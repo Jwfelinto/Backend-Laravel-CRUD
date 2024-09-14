@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Route;
  */
 Route::prefix('/clientes')->name('client.')->group(function () {
     Route::get('/', [ClientController::class, 'index'])->name('index');
-    Route::get('/{clients}', [ClientController::class, 'show'])->name('show');
+    Route::get('/{client}', [ClientController::class, 'show'])->name('show');
     Route::post('/', [ClientController::class, 'store'])->name('store');
-    Route::put('/{clients}', [ClientController::class, 'update'])->name('update');
-    Route::delete('/{clients}', [ClientController::class, 'destroy'])->name('destroy');
+    Route::put('/{client}', [ClientController::class, 'update'])->name('update');
+    Route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
 });
 
 /**
