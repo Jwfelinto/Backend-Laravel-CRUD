@@ -15,7 +15,7 @@ Route::prefix('/clientes')->name('client.')->group(function () {
     Route::get('/{clients}', [ClientController::class, 'show'])->name('show');
     Route::post('/', [ClientController::class, 'store'])->name('store');
     Route::put('/{clients}', [ClientController::class, 'update'])->name('update');
-    Route::patch('/{clients}', [ClientController::class, 'destroy'])->name('destroy');
+    Route::delete('/{clients}', [ClientController::class, 'destroy'])->name('destroy');
 });
 
 /**
@@ -41,7 +41,7 @@ Route::prefix('/projetos')->name('project.')->group(function () {
     Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
     Route::post('/', [ProjectController::class, 'store'])->name('store');
     Route::put('/{project}', [ProjectController::class, 'update'])->name('update');
-    Route::patch('/{project}', [ProjectController::class, 'destroy'])->name('destroy');
+    Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('destroy');
 });
 
 /**
