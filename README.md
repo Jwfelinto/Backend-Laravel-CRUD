@@ -43,7 +43,8 @@ php artisan serve
 5. Se estiver usando Docker, use o seguinte comando para iniciar o ambiente de desenvolvimento:
 
 ```bash
-docker-compose up --build
+docker-compose build
+docker-compose up -d
 ```
 
 6. Execute as migrations e seeders para configurar o banco de dados:
@@ -72,7 +73,7 @@ php artisan l5-swagger:generate
 3. Acesse a documentação no navegador através do caminho:
 
 ```
-http://localhost:8000/api/documentation
+http://localhost:9000/api/documentation
 ```
 
 ## Estrutura do Projeto
