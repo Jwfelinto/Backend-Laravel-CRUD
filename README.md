@@ -43,8 +43,7 @@ php artisan serve
 5. Se estiver usando Docker, use o seguinte comando para iniciar o ambiente de desenvolvimento:
 
 ```bash
-docker-compose build
-docker-compose up -d
+ docker-compose up --build -d
 ```
 
 6. Execute as migrations e seeders para configurar o banco de dados:
