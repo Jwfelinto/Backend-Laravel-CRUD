@@ -14,9 +14,25 @@ class ToolResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if ($request->routeIs('project.show')) {
+            return $this->toArrayWithQuantity($request);
+        }
         return [
             'id' => $this->id,
             'name' => $this->name
+        ];
+    }
+
+    /**
+     * Transform the resource into an array with name and quantity.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArrayWithQuantity(Request $request): array
+    {
+        return [
+            'name' => $this->name,
+            'quantity' => $this->pivot->quantity
         ];
     }
 }
