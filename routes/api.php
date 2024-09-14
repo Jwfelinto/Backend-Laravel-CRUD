@@ -21,7 +21,7 @@ Route::prefix('/clientes')->name('client.')->group(function () {
 /**
  * Installation Types Routes
  */
-Route::prefix('/instalação')->name('installation.')->group(function () {
+Route::prefix('/instalacoes')->name('installation.')->group(function () {
     Route::get('/', [InstallationTypesController::class, 'index'])->name('index');
 });
 
