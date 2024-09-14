@@ -22,8 +22,8 @@ return new class extends Migration
         if (!Schema::hasTable('project_tools')) {
             Schema::create('project_tools', function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('project_id')->constrained();
-                $table->foreignId('tool_id')->constrained();
+                $table->foreignId('project_id')->constrained()->onDelete('cascade');;
+                $table->foreignId('tool_id')->constrained()->onDelete('cascade');;
                 $table->unsignedSmallInteger('quantity');
                 $table->timestamps();
             });
