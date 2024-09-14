@@ -21,7 +21,7 @@ class ClientRepository implements ClientRepositoryInterface
         $query = $this->clients->query();
         $result = $this->applyFilters($query, $filters);
 
-        return $result->latest()->get();
+        return $result->orderBy('name', 'ASC')->get();
     }
 
     public function create(Client $client): Client
