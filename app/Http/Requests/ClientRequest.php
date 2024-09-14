@@ -18,7 +18,7 @@ class ClientRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'phone' => 'required|string|max:15',
-            'cpf_cnpj' => 'required|string|max:14',
+            'cpf_cnpj' => 'required|string|unique:clients,cpf_cnpj,' . $this->client->id,
         ];
     }
 }
