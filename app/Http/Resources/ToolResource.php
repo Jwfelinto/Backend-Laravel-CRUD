@@ -14,9 +14,13 @@ class ToolResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        if ($request->routeIs('project.show')) {
+        if ($request->routeIs(
+            'project.show',
+            'project.update'
+        )) {
             return $this->toArrayWithQuantity($request);
         }
+
         return [
             'id' => $this->id,
             'name' => $this->name
