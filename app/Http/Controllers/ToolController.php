@@ -12,6 +12,9 @@ use OpenApi\Annotations as OA;
  *     name="Tools",
  *     description="API Endpoints for Tools"
  * )
+ * @OA\PathItem(
+ *     path="/api/tools"
+ * )
  */
 class ToolController extends Controller
 {

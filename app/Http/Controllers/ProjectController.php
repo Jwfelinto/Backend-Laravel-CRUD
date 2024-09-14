@@ -14,8 +14,14 @@ use OpenApi\Annotations as OA;
 /**
  * @OA\Tag(
  *     name="Projects",
- *     description="API Endpoints of Projects"
+ *     description="API Endpoints for Projects"
  * )
+ * @OA\PathItem(
+ *     path="/api/projects"
+ * )
+ * @OA\PathItem(
+ *      path='/api/projects/{project}'
+ *  )
  */
 class ProjectController extends Controller
 {
@@ -58,6 +64,41 @@ class ProjectController extends Controller
      *         description="Filter by location",
      *         required=false,
      *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="installation_type",
+     *         in="query",
+     *         description="Filter by installation type",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="tools",
+     *         in="query",
+     *         description="Filter by tools",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="date",
+     *         in="query",
+     *         description="Filter by date",
+     *         required=false,
+     *         @OA\Schema(type="string", format="date")
+     *     ),
+     *     @OA\Parameter(
+     *         name="start_date",
+     *         in="query",
+     *         description="Filter by start date",
+     *         required=false,
+     *         @OA\Schema(type="string", format="date")
+     *     ),
+     *     @OA\Parameter(
+     *         name="end_date",
+     *         in="query",
+     *         description="Filter by end date",
+     *         required=false,
+     *         @OA\Schema(type="string", format="date")
      *     ),
      *     @OA\Response(
      *         response=200,

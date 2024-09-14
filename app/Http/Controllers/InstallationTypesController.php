@@ -12,6 +12,9 @@ use OpenApi\Annotations as OA;
  *     name="Installation Types",
  *     description="API Endpoints for Installation Types"
  * )
+ * @OA\PathItem(
+ *     path="/api/installation-types"
+ * )
  */
 class InstallationTypesController extends Controller
 {

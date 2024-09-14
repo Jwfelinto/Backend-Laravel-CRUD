@@ -12,6 +12,9 @@ use OpenApi\Annotations as OA;
  *     name="Locations",
  *     description="API Endpoints for Locations"
  * )
+ * @OA\PathItem(
+ *     path="/api/locations"
+ * )
  */
 class LocationController extends Controller
 {

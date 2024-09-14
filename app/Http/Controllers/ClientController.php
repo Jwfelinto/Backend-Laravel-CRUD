@@ -12,9 +12,27 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Annotations as OA;
 
 /**
+ * @OA\Info(
+ *     title="Client API",
+ *     description="API for managing clients"
+ * )
+ *
+ * @OA\Server(
+ *     url="http://localhost/api",
+ *     description="Local API Server"
+ * )
+ *
+ * @OA\PathItem(
+ *     path="/api/clients"
+ * )
+ *
+ * @OA\PathItem(
+ *     path="/api/clients/{client}"
+ * )
+ *
  * @OA\Tag(
  *     name="Clients",
- *     description="API Endpoints of Clients"
+ *     description="API Endpoints for Clients"
  * )
  */
 class ClientController extends Controller
