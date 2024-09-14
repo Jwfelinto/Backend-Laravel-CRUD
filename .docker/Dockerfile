@@ -16,20 +16,18 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-    RUN rm -Rf /var/www/html \
-        && ln -s /var/app/current /var/www/html \
-        && mkdir /run/php-fpm \
-        && chmod -R 777 /run/php-fpm
+WORKDIR /var/app/current
 
 COPY composer.json composer.lock ./
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-autoloader --no-scripts
 
 COPY . .
 
+RUN composer install --prefer-dist
+
 RUN composer dump-autoload --optimize
-RUN composer install --no-dev --prefer-dist --no-scripts --no-autoloader
 
-WORKDIR /var/app/current
+EXPOSE 9000
 
-CMD ["php-fpm"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=9000"]
