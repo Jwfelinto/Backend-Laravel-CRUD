@@ -29,7 +29,7 @@ class ProjectResource extends JsonResource
             ],
             'location' => $this->location->uf,
             'installation_type' => $this->installationType->name,
-            'tools' => $this->tools->pluck(['name', 'quantity']),
+            'tools' => ToolResource::collection($this->tools),
         ];
     }
 
