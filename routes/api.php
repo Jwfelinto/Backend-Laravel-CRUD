@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Route;
  */
 Route::prefix('/clientes')->name('client.')->group(function () {
     Route::get('/', [ClientController::class, 'index'])->name('index');
-    Route::get('/{client}', [ClientController::class, 'show'])->name('show');
     Route::post('/', [ClientController::class, 'store'])->name('store');
+    Route::get('/{client}', [ClientController::class, 'show'])->name('show');
     Route::put('/{client}', [ClientController::class, 'update'])->name('update');
     Route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
 });
@@ -36,10 +36,9 @@ Route::prefix('/locais')->name('location.')->group(function () {
  * Project Routes
  */
 Route::prefix('/projetos')->name('project.')->group(function () {
-    Route::get('/{project}/equipamentos', [ProjectController::class, 'projectTools'])->name('projectTools');
     Route::get('/', [ProjectController::class, 'index'])->name('index');
-    Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
     Route::post('/', [ProjectController::class, 'store'])->name('store');
+    Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
     Route::put('/{project}', [ProjectController::class, 'update'])->name('update');
     Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('destroy');
 });
