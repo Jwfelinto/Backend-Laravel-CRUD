@@ -170,10 +170,11 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request): JsonResponse
     {
-        $this->projectService->createProject($request->validated());
+        $project = $this->projectService->createProject($request->validated());
 
         return response()->json([
-            'message' => 'Project successfully created!'
+            'message' => 'Project successfully created!',
+            'data' => new ProjectResource($project)
         ], 201);
     }
 

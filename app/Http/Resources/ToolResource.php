@@ -16,6 +16,7 @@ class ToolResource extends JsonResource
     {
         if ($request->routeIs(
             'project.show',
+            'project.store',
             'project.update'
         )) {
             return $this->toArrayWithQuantity($request);
