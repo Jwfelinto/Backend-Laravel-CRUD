@@ -51,7 +51,4 @@ class ProjectFactory extends Factory
             ]);
         });
     }
-
-    // Define um state para usar registros existentes de Location e InstallationType
-
 }
