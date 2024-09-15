@@ -32,7 +32,7 @@ class ClientService
      * @param array $data
      * @return Client
      */
-        public function createClient(array $data): Client
+    public function createClient(array $data): Client
     {
         $client = new Client([
             'name' => $data['name'],

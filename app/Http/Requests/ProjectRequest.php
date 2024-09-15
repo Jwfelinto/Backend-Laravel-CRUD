@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ProjectRequest extends FormRequest
 {
@@ -23,5 +25,19 @@ class ProjectRequest extends FormRequest
             'tools.*.quantity' => 'required|integer',
 
         ];
+    }
+
+    /**
+     * @param Validator $validator
+     * @return mixed
+     */
+    protected function failedValidation(Validator $validator): mixed
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Erro de validação',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
     }
 }
