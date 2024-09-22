@@ -8,12 +8,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Annotations as OA;
 
 /**
- * @OA\Tag(
- *     name="Installation Types",
- *     description="API Endpoints for Installation Types"
- * )
- * @OA\PathItem(
- *     path="/api/installation-types"
+ * @OA\Schema(
+ *     schema="InstallationType",
+ *     type="object",
+ *     @OA\Property(property="id", type="integer"),
+ *     @OA\Property(property="name", type="string"),
  * )
  */
 class InstallationTypesController extends Controller
@@ -31,17 +30,14 @@ class InstallationTypesController extends Controller
     /**
      * @OA\Get(
      *     path="/api/installation-types",
-     *     tags={"Installation Types"},
+     *     tags={"InstallationTypes"},
      *     summary="List all installation types",
-     *     description="Return a list of all installation types",
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/InstallationTypeResource"))
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/InstallationType"))
      *     )
      * )
-     *
-     * @return JsonResource
      */
     public function index(): JsonResource
     {

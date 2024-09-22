@@ -6,7 +6,18 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Schema(
+ *     schema="ClientRequest",
+ *     required={"name", "email", "phone", "cpf_cnpj"},
+ *     @OA\Property(property="name", type="string", example="John Doe"),
+ *     @OA\Property(property="email", type="string", example="john@example.com"),
+ *     @OA\Property(property="phone", type="string", example="123456789"),
+ *     @OA\Property(property="cpf_cnpj", type="string", example="123.456.789-00")
+ * )
+ */
 class ClientRequest extends FormRequest
 {
     /**

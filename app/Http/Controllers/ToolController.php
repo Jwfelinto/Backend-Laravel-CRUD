@@ -12,6 +12,26 @@ use OpenApi\Annotations as OA;
  *     name="Tools",
  *     description="API Endpoints for Tools"
  * )
+ * @OA\Schema(
+ *     schema="ToolResource",
+ *     type="object",
+ *     title="Tool Resource",
+ *     @OA\Property(
+ *         property="id",
+ *         type="integer",
+ *         description="Tool ID"
+ *     ),
+ *     @OA\Property(
+ *         property="name",
+ *         type="string",
+ *         description="Tool name"
+ *     ),
+ *     @OA\Property(
+ *         property="description",
+ *         type="string",
+ *         description="Tool description"
+ *     )
+ * )
  * @OA\PathItem(
  *     path="/api/tools"
  * )

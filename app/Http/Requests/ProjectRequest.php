@@ -22,14 +22,16 @@ class ProjectRequest extends FormRequest
             'installation_type_id' => 'required|exists:installation_types,id',
             'tools' => 'required|array',
             'tools.*.id' => 'required|exists:tools,id',
-            'tools.*.quantity' => 'required|integer',
+            'tools.*.quantity' => 'required|integer|min:1',
 
         ];
     }
 
     /**
+     * Handle a failed validation attempt.
+     *
      * @param Validator $validator
-     * @return mixed
+     * @throws HttpResponseException
      */
     protected function failedValidation(Validator $validator): mixed
     {

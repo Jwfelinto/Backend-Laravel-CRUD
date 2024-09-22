@@ -4,14 +4,26 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Schema(
+ *     title="ToolResource",
+ *     description="Tool resource",
+ *     @OA\Property(
+ *         property="id",
+ *         type="integer",
+ *         description="ID do tool"
+ *     ),
+ *     @OA\Property(
+ *         property="name",
+ *         type="string",
+ *         description="Nome do tool"
+ *     )
+ * )
+ */
 class ToolResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         if ($request->routeIs(

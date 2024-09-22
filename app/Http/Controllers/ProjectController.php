@@ -16,12 +16,6 @@ use OpenApi\Annotations as OA;
  *     name="Projects",
  *     description="API Endpoints for Projects"
  * )
- * @OA\PathItem(
- *     path="/api/projects"
- * )
- * @OA\PathItem(
- *      path='/api/projects/{project}'
- *  )
  */
 class ProjectController extends Controller
 {
@@ -37,9 +31,6 @@ class ProjectController extends Controller
 
     private ProjectService $projectService;
 
-    /**
-     * @param ProjectService $projectService
-     */
     public function __construct(ProjectService $projectService)
     {
         $this->projectService = $projectService;
@@ -106,9 +97,6 @@ class ProjectController extends Controller
      *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/ProjectResource"))
      *     )
      * )
-     *
-     * @param Request $request
-     * @return JsonResource
      */
     public function index(Request $request): JsonResource
     {
@@ -137,9 +125,6 @@ class ProjectController extends Controller
      *         @OA\JsonContent(ref="#/components/schemas/ProjectResource")
      *     )
      * )
-     *
-     * @param Project $project
-     * @return JsonResource
      */
     public function show(Project $project): JsonResource
     {
@@ -160,13 +145,19 @@ class ProjectController extends Controller
      *         response=201,
      *         description="Project successfully created",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Project successfully created!")
+     *             @OA\Property(property="message", type="string", example="Project successfully created!"),
+     *             @OA\Property(property="data", ref="#/components/schemas/ProjectResource")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Erro de validação"),
+     *             @OA\Property(property="errors", type="object")
      *         )
      *     )
      * )
-     *
-     * @param ProjectRequest $request
-     * @return JsonResponse
      */
     public function store(ProjectRequest $request): JsonResponse
     {
@@ -202,12 +193,16 @@ class ProjectController extends Controller
      *             @OA\Property(property="message", type="string", example="Project successfully updated!"),
      *             @OA\Property(property="data", ref="#/components/schemas/ProjectResource")
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Erro de validação"),
+     *             @OA\Property(property="errors", type="object")
+     *         )
      *     )
      * )
-     *
-     * @param ProjectRequest $request
-     * @param Project $project
-     * @return JsonResponse
      */
     public function update(ProjectRequest $request, Project $project): JsonResponse
     {
@@ -233,16 +228,17 @@ class ProjectController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
-     *         response=200,
-     *         description="Project successfully deleted",
+     *         response=204,
+     *         description="Project successfully deleted"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Project not found",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Project successfully deleted!")
+     *             @OA\Property(property="message", type="string", example="Project not found")
      *         )
      *     )
      * )
-     *
-     * @param Project $project
-     * @return JsonResponse
      */
     public function destroy(Project $project): JsonResponse
     {

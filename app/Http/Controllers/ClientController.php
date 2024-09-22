@@ -13,26 +13,9 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Info(
- *     title="Client API",
- *     description="API for managing clients"
- * )
- *
- * @OA\Server(
- *     url="http://localhost/api",
- *     description="Local API Server"
- * )
- *
- * @OA\PathItem(
- *     path="/api/clients"
- * )
- *
- * @OA\PathItem(
- *     path="/api/clients/{client}"
- * )
- *
- * @OA\Tag(
- *     name="Clients",
- *     description="API Endpoints for Clients"
+ *     title="API Documentation",
+ *     version="1.0.0",
+ *     description="API Endpoints for Client"
  * )
  */
 class ClientController extends Controller
@@ -55,48 +38,11 @@ class ClientController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/clients",
-     *     tags={"Clients"},
-     *     summary="List all clients",
-     *     description="Return a list of clients with optional filters",
-     *     @OA\Parameter(
-     *         name="name",
-     *         in="query",
-     *         description="Filter by client name",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="email",
-     *         in="query",
-     *         description="Filter by client email",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="phone",
-     *         in="query",
-     *         description="Filter by client phone",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="cpf_cnpj",
-     *         in="query",
-     *         description="Filter by client CPF or CNPJ",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/ClientResource"))
-     *     )
+     * @OA\Response(
+     *     response=200,
+     *     description="Successful operation",
+     *     @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/ClientResource"))
      * )
-     *
-     * @param Request $request
-     * @return JsonResource
      */
     public function index(Request $request): JsonResource
     {
@@ -108,10 +54,10 @@ class ClientController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/clients/{client}",
+     *     path="/api/clientes/{client}",
      *     tags={"Clients"},
      *     summary="Show a client",
-     *     description="Return a single client",
+     *     description="Return a single client by ID",
      *     @OA\Parameter(
      *         name="client",
      *         in="path",
@@ -122,7 +68,14 @@ class ClientController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/ClientResource")
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer", example=1),
+     *             @OA\Property(property="name", type="string", example="John Doe"),
+     *             @OA\Property(property="email", type="string", example="john@example.com"),
+     *             @OA\Property(property="phone", type="string", example="123456789"),
+     *             @OA\Property(property="cpf_cnpj", type="string", example="123.456.789-00"),
+     *             @OA\Property(property="projects", type="array", @OA\Items(ref="#/components/schemas/ProjectResource"))
+     *         )
      *     )
      * )
      *
@@ -136,13 +89,19 @@ class ClientController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/clients",
+     *     path="/api/clientes",
      *     tags={"Clients"},
      *     summary="Create a new client",
      *     description="Create a new client",
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/ClientRequest")
+     *         @OA\JsonContent(
+     *             required={"name", "email", "phone", "cpf_cnpj"},
+     *             @OA\Property(property="name", type="string", example="John Doe"),
+     *             @OA\Property(property="email", type="string", example="john@example.com"),
+     *             @OA\Property(property="phone", type="string", example="123456789"),
+     *             @OA\Property(property="cpf_cnpj", type="string", example="123.456.789-00")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=201,
@@ -167,10 +126,10 @@ class ClientController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/clients/{client}",
+     *     path="/api/clientes/{client}",
      *     tags={"Clients"},
-     *     summary="Update an existing client",
-     *     description="Update an existing client",
+     *     summary="Update a client",
+     *     description="Update a client by ID",
      *     @OA\Parameter(
      *         name="client",
      *         in="path",
@@ -180,11 +139,16 @@ class ClientController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/ClientRequest")
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", example="John Doe"),
+     *             @OA\Property(property="email", type="string", example="john@example.com"),
+     *             @OA\Property(property="phone", type="string", example="123456789"),
+     *             @OA\Property(property="cpf_cnpj", type="string", example="123.456.789-00")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Client successfully updated",
+     *         description="Successful operation",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Client successfully updated!"),
      *             @OA\Property(property="data", ref="#/components/schemas/ClientResource")
@@ -220,7 +184,7 @@ class ClientController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(
-     *         response=200,
+     *         response=204,
      *         description="Client successfully deleted",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Client successfully deleted!")
@@ -237,6 +201,6 @@ class ClientController extends Controller
 
         return response()->json([
             'message' => 'Client successfully deleted!'
-        ],204);
+        ], 204);
     }
 }
