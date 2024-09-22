@@ -68,19 +68,9 @@ class ClientController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="id", type="integer", example=1),
-     *             @OA\Property(property="name", type="string", example="John Doe"),
-     *             @OA\Property(property="email", type="string", example="john@example.com"),
-     *             @OA\Property(property="phone", type="string", example="123456789"),
-     *             @OA\Property(property="cpf_cnpj", type="string", example="123.456.789-00"),
-     *             @OA\Property(property="projects", type="array", @OA\Items(ref="#/components/schemas/ProjectResource"))
-     *         )
+     *         @OA\JsonContent(ref="#/components/schemas/ClientResource")
      *     )
      * )
-     *
-     * @param Client $client
-     * @return JsonResource
      */
     public function show(Client $client): JsonResource
     {
@@ -126,7 +116,7 @@ class ClientController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/clientes/{client}",
+     *     path="/clientes/{client}",
      *     tags={"Clients"},
      *     summary="Update a client",
      *     description="Update a client by ID",
@@ -139,23 +129,14 @@ class ClientController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string", example="John Doe"),
-     *             @OA\Property(property="email", type="string", example="john@example.com"),
-     *             @OA\Property(property="phone", type="string", example="123456789"),
-     *             @OA\Property(property="cpf_cnpj", type="string", example="123.456.789-00")
-     *         )
+     *         @OA\JsonContent(ref="#/components/schemas/ClientRequest")
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Client successfully updated!"),
-     *             @OA\Property(property="data", ref="#/components/schemas/ClientResource")
-     *         )
+     *         description="Client updated",
+     *         @OA\JsonContent(ref="#/components/schemas/ClientResource")
      *     )
      * )
-     *
      * @param ClientRequest $request
      * @param Client $client
      * @return JsonResponse
