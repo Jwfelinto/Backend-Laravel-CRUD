@@ -14,20 +14,13 @@ class InstallationType extends Model
         'name'
     ];
 
-    public const FIBROCIMENTO_MADEIRA = 'Fibrocimento (Madeira)';
-    public const FIBROCIMENTO_METALICO = 'Fibrocimento (Metálico)';
-    public const CERAMICO = 'Cerâmico';
-    public const METALICO = 'Metálico';
-    public const LAJE = 'Laje';
-    public const SOLO = 'Solo';
-
     public const TYPES = [
-        InstallationType::FIBROCIMENTO_MADEIRA,
-        InstallationType::FIBROCIMENTO_METALICO,
-        InstallationType::CERAMICO,
-        InstallationType::METALICO,
-        InstallationType::LAJE,
-        InstallationType::SOLO
+        'Fibrocimento (Madeira)',
+        'Fibrocimento (Metálico)',
+        'Cerâmico',
+        'Metálico',
+        'Laje',
+        'Solo'
     ];
 
     /**
