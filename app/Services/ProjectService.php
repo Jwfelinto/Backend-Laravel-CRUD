@@ -35,11 +35,7 @@ class ProjectService
      */
     public function createProject(array $data): Project
     {
-        $project = new Project([
-            'client_id' => $data['client_id'],
-            'location_id' => $data['location_id'],
-            'installation_type_id' => $data['installation_type_id'],
-        ]);
+        $project = new Project($data);
 
         $tools = [];
         foreach ($data['tools'] as $tool) {
