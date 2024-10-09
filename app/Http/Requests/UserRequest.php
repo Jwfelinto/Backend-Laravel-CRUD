@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Rule;
 
 /**
@@ -54,7 +55,7 @@ class UserRequest extends FormRequest
      * @param Validator $validator
      * @return mixed
      */
-    protected function failedValidation(Validator $validator): mixed
+    protected function failedValidation(Validator $validator): JsonResponse
     {
         throw new HttpResponseException(
             response()->json([
