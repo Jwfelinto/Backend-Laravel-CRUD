@@ -5,10 +5,11 @@ use App\Http\Controllers\InstallationTypesController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ToolController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /**
- *
+ * Client Routes
  */
 Route::prefix('/clientes')->name('client.')->group(function () {
     Route::get('/', [ClientController::class, 'index'])->name('index');
@@ -48,4 +49,15 @@ Route::prefix('/projetos')->name('project.')->group(function () {
  */
 Route::prefix('/equipamentos')->name('tools.')->group(function () {
     Route::get('/', [ToolController::class, 'index'])->name('index');
+});
+
+/**
+ * User Routes
+ */
+Route::prefix('/usuarios')->name('user.')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::post('/', [UserController::class, 'signUp'])->name('signUp');
+    Route::get('/{user}', [UserController::class, 'show'])->name('show');
+    Route::put('/{user}', [UserController::class, 'update'])->name('update');
+    Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
 });
