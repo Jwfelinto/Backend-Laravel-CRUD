@@ -13,25 +13,15 @@ class Tool extends Model
         'name'
     ];
 
-    public const MODULO = 'Módulo';
-    public const INVERSOR = 'Inversor';
-    public const MICROINVERSOR = 'Microinversor';
-    public const ESTRUTURA = 'Estrutura';
-    public const CABO_VERMELHO = 'Cabo vermelho';
-    public const CABO_PRETO = 'Cabo preto';
-    public const STRING_BOX = 'String Box ';
-    public const CABO_TRONCO = 'Cabo Tronco';
-    public const ENDCAP = 'Endcap ';
-
     public const ALL = [
-        Tool::MODULO,
-        Tool::INVERSOR,
-        Tool::MICROINVERSOR,
-        Tool::ESTRUTURA,
-        Tool::CABO_VERMELHO,
-        Tool::CABO_PRETO,
-        Tool::STRING_BOX,
-        Tool::CABO_TRONCO,
-        Tool::ENDCAP
+        'modulo',
+        'inversor',
+        'microinversor',
+        'estrutura',
+        'cabo vermelho',
+        'cabo preto',
+        'string box',
+        'cabo tronco',
+        'endcap'
     ];
 }
