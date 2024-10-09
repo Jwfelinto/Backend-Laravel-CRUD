@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 use OpenApi\Annotations as OA;
 
 /**
@@ -27,22 +28,10 @@ class ClientRequest extends FormRequest
      */
     public function rules(): array
     {
-        if ($this->isMethod('post')) {
-            return $this->rulesForStore();
-        }
-
-        if ($this->isMethod('put') || $this->isMethod('patch')) {
+        if ($this->isMethod('put')) {
             return $this->rulesForUpdate();
         }
 
-        return [];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function rulesForStore(): array
-    {
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:100|unique:clients,email',
@@ -56,13 +45,11 @@ class ClientRequest extends FormRequest
      */
     public function rulesForUpdate(): array
     {
-        $clientId = $this->route('client')->id;
-
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:100|unique:clients,email,' . $clientId,
+            'email' => 'required|email', Rule::unique('clients')->ignore($this->id),
             'phone' => 'required|string|max:20',
-            'cpf_cnpj' => 'required|string|unique:clients,cpf_cnpj,' . $clientId,
+            'cpf_cnpj' => 'required|string', Rule::unique('clients')->ignore($this->id),
         ];
     }
 
