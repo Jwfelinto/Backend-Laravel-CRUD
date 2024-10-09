@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 
 /**
  * @OA\Schema(
- *     schema="ClientRequest",
+ *     schema="UserRequest",
  *     required={"name", "email", "password"},
  *     @OA\Property(property="name", type="string", example="John Doe"),
  *     @OA\Property(property="email", type="string", example="john@example.com"),
