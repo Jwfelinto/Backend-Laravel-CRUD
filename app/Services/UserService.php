@@ -59,4 +59,13 @@ class UserService
         return $this->userRepository->update($user);
     }
 
+    /**
+     * @param User $user
+     * @return void
+     */
+    public function deleteUser(User $user): void
+    {
+        $user->delete();
+    }
+
 }
