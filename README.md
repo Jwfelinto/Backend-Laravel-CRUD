@@ -1,4 +1,4 @@
-
+composer show doctrine/dbal
 # Backend Laravel CRUD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
@@ -34,17 +34,17 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-4. Inicie o servidor local do Laravel:
-
-```bash
-php artisan serve
-```
-
-5. Se estiver usando Docker, use o seguinte comando para iniciar o ambiente de desenvolvimento:
+4. Use o seguinte comando para iniciar o ambiente de desenvolvimento usando o Docker:
 
 ```bash
  docker-compose up --build -d
 ```
+
+5. Acesse o container:
+
+```bash
+ docker compose exec app bash
+ ```
 
 6. Execute as migrations e seeders para configurar o banco de dados:
 
