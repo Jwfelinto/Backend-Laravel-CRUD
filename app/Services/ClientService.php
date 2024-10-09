@@ -34,12 +34,7 @@ class ClientService
      */
     public function createClient(array $data): Client
     {
-        $client = new Client([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'cpf_cnpj' => $data['cpf_cnpj'],
-        ]);
+        $client = new Client($data);
 
         return $this->clientRepository->create($client);
     }

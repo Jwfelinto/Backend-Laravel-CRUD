@@ -6,20 +6,19 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Rule;
-use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(
- *     schema="ClientRequest",
- *     required={"name", "email", "phone", "cpf_cnpj"},
+ *     schema="UserRequest",
+ *     required={"name", "email", "password"},
  *     @OA\Property(property="name", type="string", example="John Doe"),
  *     @OA\Property(property="email", type="string", example="john@example.com"),
- *     @OA\Property(property="phone", type="string", example="123456789"),
- *     @OA\Property(property="cpf_cnpj", type="string", example="123.456.789-00")
+ *     @OA\Property(property="password", type="string", example="password"),
  * )
  */
-class ClientRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -34,9 +33,8 @@ class ClientRequest extends FormRequest
 
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:100|unique:clients,email',
-            'phone' => 'required|string|max:20',
-            'cpf_cnpj' => 'required|string|unique:clients,cpf_cnpj',
+            'email' => 'required|email|max:100|unique:users',
+            'password' => 'required|string|min:10'
         ];
     }
 
@@ -47,9 +45,8 @@ class ClientRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email', Rule::unique('clients')->ignore($this->id),
-            'phone' => 'required|string|max:20',
-            'cpf_cnpj' => 'required|string', Rule::unique('clients')->ignore($this->id),
+            'email' => 'required|email', Rule::unique('users')->ignore($this->id),
+            'password' => 'required|string|min:10'
         ];
     }
 
@@ -58,7 +55,7 @@ class ClientRequest extends FormRequest
      * @param Validator $validator
      * @return mixed
      */
-    protected function failedValidation(Validator $validator): mixed
+    protected function failedValidation(Validator $validator): JsonResponse
     {
         throw new HttpResponseException(
             response()->json([
