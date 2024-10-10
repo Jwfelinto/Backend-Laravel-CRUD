@@ -50,7 +50,7 @@ class UserController extends Controller
      * @param UserRequest $request
      * @return JsonResponse
      */
-    public function signUp(UserRequest $request): JsonResponse
+    public function register(UserRequest $request): JsonResponse
     {
         $users = $this->userService->registerUser($request->validated());
 
