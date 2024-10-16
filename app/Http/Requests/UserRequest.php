@@ -34,7 +34,15 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:100|unique:users',
-            'password' => 'required|string|min:10'
+            'password' => [
+                'required',
+                'string',
+                'min:10',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[!@#$%^&*]/'
+            ],
         ];
     }
 
@@ -46,10 +54,17 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email', Rule::unique('users')->ignore($this->id),
-            'password' => 'required|string|min:10'
+            'password' => [
+                'required',
+                'string',
+                'min:10',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[!@#$%^&*]/'
+            ],
         ];
     }
-
 
     /**
      * @param Validator $validator
