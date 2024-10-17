@@ -37,11 +37,7 @@ class UserRequest extends FormRequest
             'password' => [
                 'required',
                 'string',
-                'min:10',
-                'regex:/[a-z]/',
-                'regex:/[A-Z]/',
-                'regex:/[0-9]/',
-                'regex:/[!@#$%^&*]/'
+                'min:10'
             ],
         ];
     }
@@ -57,11 +53,7 @@ class UserRequest extends FormRequest
             'password' => [
                 'required',
                 'string',
-                'min:10',
-                'regex:/[a-z]/',
-                'regex:/[A-Z]/',
-                'regex:/[0-9]/',
-                'regex:/[!@#$%^&*]/'
+                'min:10'
             ],
         ];
     }
@@ -78,5 +70,32 @@ class UserRequest extends FormRequest
                 'errors' => $validator->errors(),
             ], 422)
         );
+    }
+
+    /**
+     * @param Validator $validator
+     * @return void
+     */
+    protected function withValidator(Validator  $validator): void
+    {
+        $validator->after(function ($validator) {
+            $password = $this->input('password');
+
+            if (!preg_match('/[a-z]/', $password)) {
+                $validator->errors()->add('password', 'A senha deve conter pelo menos uma letra minúscula (a-z).');
+            }
+
+            if (!preg_match('/[A-Z]/', $password)) {
+                $validator->errors()->add('password', 'A senha deve conter pelo menos uma letra maiúscula (A-Z).');
+            }
+
+            if (!preg_match('/[0-9]/', $password)) {
+                $validator->errors()->add('password', 'A senha deve conter pelo menos um número (0-9).');
+            }
+
+            if (!preg_match('/[!@#$%^&*]/', $password)) {
+                $validator->errors()->add('password', 'A senha deve conter pelo menos um caractere especial (!@#$%^&*).');
+            }
+        });
     }
 }
