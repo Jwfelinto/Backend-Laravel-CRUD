@@ -107,15 +107,15 @@ class ProjectRepository implements ProjectRepositoryInterface
 
     /**
      * @param Builder $query
-     * @param int|null $tools
+     * @param string|null $tools
      * @return Builder
      */
-    private function filterTools(Builder $query, ?int $tools): Builder
+    private function filterTools(Builder $query, ?string $tools): Builder
     {
         return $query->when($tools, function (Builder $query) use ($tools) {
                 $toolsIds = explode(',', $tools);
                 return $query->whereHas('tools', function (Builder $toolsQuery) use ($toolsIds) {
-                    $toolsQuery->whereIn('id', $toolsIds);
+                    $toolsQuery->whereIn('tools.id', $toolsIds);
                 });
             });
     }
