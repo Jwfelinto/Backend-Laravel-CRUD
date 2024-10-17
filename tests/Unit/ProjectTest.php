@@ -6,7 +6,9 @@ use App\Models\Client;
 use App\Models\InstallationType;
 use App\Models\Location;
 use App\Models\Tool;
+use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use App\Models\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,6 +22,9 @@ class ProjectTest extends TestCase
      */
     public function test_can_create_a_project(): void
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
         $client = Client::factory()->create();
         $location = Location::factory()->create();
         $installationType = InstallationType::factory()->create();
@@ -58,6 +63,9 @@ class ProjectTest extends TestCase
      */
     public function test_can_show_a_project(): void
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
         $project = Project::factory()->withTools()->create();
 
         $response = $this->get("/api/projetos/{$project->id}");
@@ -70,6 +78,9 @@ class ProjectTest extends TestCase
      */
     public function test_can_update_a_project(): void
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
         $project = Project::factory()->create();
         $tool = Tool::factory()->create();
 
@@ -106,6 +117,9 @@ class ProjectTest extends TestCase
      */
     public function test_can_delete_a_project(): void
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
         $project = Project::factory()->create();
 
         $response = $this->delete("/api/projetos/{$project->id}");
