@@ -2,14 +2,14 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 
-Este projeto é uma API desenvolvida em Laravel para gerenciamento de **Projetos** com funcionalidades de CRUD (Create, Read, Update, Delete). Ele segue uma arquitetura baseada em **Service**, **Repository** e **Interface**, garantindo uma separação clara das responsabilidades e um código mais organizado.
+Este projeto é uma API desenvolvida em Laravel para gerenciamento de **Projetos** de energia solar, com funcionalidades  CRUD (Create, Read, Update, Delete). Ele segue uma arquitetura baseada em **Service**, **Repository** e **Interface**, garantindo uma separação clara das responsabilidades e um código mais organizado.
 
 ## Requisitos
 
-- PHP 8.0+
+- PHP 8.3+
 - Composer
 - MySQL
-- Docker (opcional)
+- Docker
 - Postman (para testar as rotas da API)
 
 ## Instalação
@@ -92,11 +92,8 @@ O projeto possui testes unitários que podem ser executados com o PHPUnit. Para 
 php artisan test
 ```
 
-Atualmente, há testes para a model `Project`, `Client` e `InstallationType`. Pretendo finalizar os testes assim que estiver com um tempinho disponível.
+Atualmente, há testes para as models `Client`, `Project`, `Location`, `InstallationType`, `Tool` e `User`.
 
-<!--## Contribuição
-
-Contribuições são bem-vindas! Se você encontrar algum problema ou tiver sugestões, sinta-se à vontade para abrir uma issue ou enviar um pull request.-->
 
 ## Licença
 

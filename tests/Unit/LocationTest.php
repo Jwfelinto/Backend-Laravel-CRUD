@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Location;
 use App\Models\Project;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -11,7 +12,7 @@ class LocationTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function can_create_a_location()
     {
         $data = ['uf' => 'BA'];
@@ -22,7 +23,7 @@ class LocationTest extends TestCase
         $this->assertEquals('BA', $location->uf);
     }
 
-    /** @test */
+    #[Test]
     public function location_has_many_projects()
     {
         $location = Location::factory()->create();

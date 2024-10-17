@@ -3,9 +3,9 @@
 namespace Tests\Unit;
 
 use App\Models\Client;
-use App\Models\Project;
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ClientTest extends TestCase
@@ -13,7 +13,8 @@ class ClientTest extends TestCase
     /**
      * A basic unit test example.
      */
-    public function test_can_create_a_client()
+    #[Test]
+    public function can_create_a_client()
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -33,7 +34,8 @@ class ClientTest extends TestCase
     /**
      * @return void
      */
-    public function test_can_list_clients()
+    #[Test]
+    public function can_list_clients()
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -52,7 +54,8 @@ class ClientTest extends TestCase
     /**
      * @return void
      */
-    public function test_can_update_a_client()
+    #[Test]
+    public function can_update_a_client()
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -74,7 +77,8 @@ class ClientTest extends TestCase
     /**
      * @return void
      */
-    public function test_can_delete_a_client()
+    #[Test]
+    public function can_delete_a_client()
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
