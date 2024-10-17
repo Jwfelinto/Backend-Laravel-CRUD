@@ -3,11 +3,25 @@
 namespace App\Repositories\Interfaces;
 
 use App\Models\Client;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface ClientRepositoryInterface
 {
-    public function all(?array $filters): Collection;
+    /**
+     * @param array|null $filters
+     * @return LengthAwarePaginator
+     */
+    public function all(?array $filters): LengthAwarePaginator;
+
+    /**
+     * @param Client $client
+     * @return Client
+     */
     public function create(Client $client):Client;
+
+    /**
+     * @param Client $client
+     * @return Client
+     */
     public function update(Client $client): Client;
 }

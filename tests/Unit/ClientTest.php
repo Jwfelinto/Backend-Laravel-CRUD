@@ -4,6 +4,8 @@ namespace Tests\Unit;
 
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\User;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ClientTest extends TestCase
@@ -13,10 +15,13 @@ class ClientTest extends TestCase
      */
     public function test_can_create_a_client()
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
         $data = [
             'name' => 'João Batista',
             'email' => 'joaobatista@example.com',
-            'phone' => '123456789',
+            'phone' => '12345678985',
             'cpf_cnpj' => '12345678901',
         ];
         $response = $this->post('/api/clientes', $data);
@@ -30,6 +35,9 @@ class ClientTest extends TestCase
      */
     public function test_can_list_clients()
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
         $client = Client::factory()->create();
 
         $response = $this->get('/api/clientes');
@@ -46,6 +54,9 @@ class ClientTest extends TestCase
      */
     public function test_can_update_a_client()
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
         $client = Client::factory()->create();
 
         $data = [
@@ -65,6 +76,9 @@ class ClientTest extends TestCase
      */
     public function test_can_delete_a_client()
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
         $client = Client::factory()->create();
 
         $response = $this->delete("/api/clientes/{$client->id}");

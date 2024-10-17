@@ -4,7 +4,7 @@ namespace App\Services;
 
 
 use App\Repositories\Interfaces\ToolRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ToolService
 {
@@ -19,9 +19,9 @@ class ToolService
     }
 
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function getAll(): Collection
+    public function getAll(): LengthAwarePaginator
     {
         return $this->toolRepository->all();
     }

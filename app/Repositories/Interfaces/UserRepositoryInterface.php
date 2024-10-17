@@ -3,15 +3,15 @@
 namespace App\Repositories\Interfaces;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface UserRepositoryInterface
 {
     /**
      * @param array|null $filters
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function all(?array $filters): Collection;
+    public function all(?array $filters): LengthAwarePaginator;
 
     /**
      * @param User $user

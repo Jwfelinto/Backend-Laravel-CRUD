@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Tool;
 use App\Repositories\Interfaces\ToolRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ToolRepository implements ToolRepositoryInterface
 {
@@ -19,10 +20,14 @@ class ToolRepository implements ToolRepositoryInterface
     }
 
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function all(): Collection
+    public function all(): LengthAwarePaginator
     {
-        return $this->tools->all();
+        $pagination = request('pagination', 10);
+
+        $query = $this->tools->query();
+
+        return $query->paginate(fn ($total) => $pagination == '0' ? $total : $pagination);
     }
 }
