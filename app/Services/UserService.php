@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -39,7 +40,7 @@ class UserService
         $user = new User([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
         ]);
 
         return $this->userRepository->create($user);
@@ -54,7 +55,7 @@ class UserService
     {
         $user->name = $data['name'];
         $user->email = $data['email'];
-        $user->password = bcrypt($data['password']);
+        $user->password = Hash::make($data['password']);
 
         return $this->userRepository->update($user);
     }
