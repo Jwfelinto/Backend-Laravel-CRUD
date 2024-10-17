@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tool extends Model
 {
@@ -24,4 +25,10 @@ class Tool extends Model
         'cabo tronco',
         'endcap'
     ];
+
+    public function projects(): BelongsToMany
+    {
+        return $this->belongsToMany(Project::class, 'project_tools')
+            ->withPivot('quantity');
+    }
 }

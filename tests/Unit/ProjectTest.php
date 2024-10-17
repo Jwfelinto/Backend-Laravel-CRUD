@@ -9,6 +9,7 @@ use App\Models\Tool;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use App\Models\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,7 +21,8 @@ class ProjectTest extends TestCase
     /**
      * @return void
      */
-    public function test_can_create_a_project(): void
+    #[Test]
+    public function can_create_a_project(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -61,7 +63,8 @@ class ProjectTest extends TestCase
     /**
      * @return void
      */
-    public function test_can_show_a_project(): void
+    #[Test]
+    public function can_show_a_project(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -76,7 +79,8 @@ class ProjectTest extends TestCase
     /**
      * @return void
      */
-    public function test_can_update_a_project(): void
+    #[Test]
+    public function can_update_a_project(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -115,7 +119,8 @@ class ProjectTest extends TestCase
     /**
      * @return void
      */
-    public function test_can_delete_a_project(): void
+    #[Test]
+    public function can_delete_a_project(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -131,7 +136,8 @@ class ProjectTest extends TestCase
     /**
      * @return void
      */
-    public function test_project_has_a_client(): void
+    #[Test]
+    public function project_has_a_client(): void
     {
         $client = Client::factory()->create();
         $project = Project::factory()->create([
@@ -148,7 +154,8 @@ class ProjectTest extends TestCase
     /**
      * @return void
      */
-    public function test_project_has_a_location(): void
+    #[Test]
+    public function project_has_a_location(): void
     {
         $location = Location::factory()->create();
         $project = Project::factory()->create([
@@ -165,7 +172,8 @@ class ProjectTest extends TestCase
     /**
      * @return void
      */
-    public function test_project_has_an_installation_type(): void
+    #[Test]
+    public function project_has_an_installation_type(): void
     {
         $installationType = InstallationType::factory()->create();
         $project = Project::factory()->create([
