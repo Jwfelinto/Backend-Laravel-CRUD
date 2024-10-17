@@ -24,12 +24,12 @@ class ProjectResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-//        if ($request->routeIs(
-//            'project.index',
-//            'client.show'
-//        )) {
-//            return $this->toArrayCollection($request);
-//        }
+        if ($request->routeIs(
+            'project.index',
+            'client.show'
+        )) {
+            return $this->toArrayCollection($request);
+        }
 
         return [
             'id' => $this->id,
