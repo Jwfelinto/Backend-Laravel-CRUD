@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\InstallationType;
 use App\Repositories\Interfaces\InstallationTypeRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class InstallationTypeRepository implements InstallationTypeRepositoryInterface
 {
@@ -19,10 +19,14 @@ class InstallationTypeRepository implements InstallationTypeRepositoryInterface
     }
 
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function all(): Collection
+    public function all(): LengthAwarePaginator
     {
-        return $this->installationType->all();
+        $pagination = request('pagination', 10);
+
+        $query = $this->installationType->query();
+
+        return $query->paginate(fn ($total) => $pagination == '0' ? $total : $pagination);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\Interfaces\InstallationTypeRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class InstallationTypeService
 {
@@ -18,9 +18,9 @@ class InstallationTypeService
     }
 
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function getAll(): Collection
+    public function getAll(): LengthAwarePaginator
     {
         return $this->installationRepository->all();
     }

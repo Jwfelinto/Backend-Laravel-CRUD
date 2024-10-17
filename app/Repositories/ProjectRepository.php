@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Project;
 use App\Repositories\Interfaces\ProjectRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProjectRepository implements ProjectRepositoryInterface
 {
@@ -24,14 +24,16 @@ class ProjectRepository implements ProjectRepositoryInterface
 
     /**
      * @param array|null $filters
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function all(?array $filters): Collection
+    public function all(?array $filters): LengthAwarePaginator
     {
+        $pagination = request('pagination', 10);
+
         $query = $this->projects->with(['client', 'location', 'tools', 'installationType']);
         $result = $this->applyFilters($query, $filters);
 
-        return $result->latest()->get();
+        return $result->latest()->paginate(fn ($total) => $pagination == '0' ? $total : $pagination);
     }
 
     /**

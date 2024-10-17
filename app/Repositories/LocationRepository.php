@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Location;
 use App\Repositories\Interfaces\LocationRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class LocationRepository implements LocationRepositoryInterface
 {
@@ -19,10 +20,14 @@ class LocationRepository implements LocationRepositoryInterface
     }
 
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function all(): Collection
+    public function all(): LengthAwarePaginator
     {
-        return $this->locations->all();
+        $pagination = request('pagination', 10);
+
+        $query = $this->locations->query();
+        return $query->paginate(fn ($total) => $pagination == '0' ? $total : $pagination);
+
     }
 }

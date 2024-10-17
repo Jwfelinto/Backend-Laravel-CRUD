@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -24,9 +24,9 @@ class UserService
 
     /**
      * @param array|null $data
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function getAll(?array $data): Collection
+    public function getAll(?array $data): LengthAwarePaginator
     {
         return $this->userRepository->all($data);
     }

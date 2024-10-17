@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Project;
 use App\Repositories\Interfaces\ProjectRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProjectService
 {
@@ -20,9 +20,9 @@ class ProjectService
 
     /**
      * @param array|null $data
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function getProjects(?array $data): Collection
+    public function getProjects(?array $data): LengthAwarePaginator
     {
         $filters = $this->checkFilters($data);
 

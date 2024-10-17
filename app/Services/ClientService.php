@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Models\Client;
 use App\Repositories\Interfaces\ClientRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ClientService
 {
@@ -21,9 +21,9 @@ class ClientService
 
     /**
      * @param $filters
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function getAll($filters): Collection
+    public function getAll($filters): LengthAwarePaginator
     {
         return $this->clientRepository->all($filters);
     }
@@ -58,7 +58,7 @@ class ClientService
      * @param Client $client
      * @return JsonResponse
      */
-    public function delete(Client $client)
+    public function delete(Client $client): JsonResponse
     {
         $client->delete();
 
