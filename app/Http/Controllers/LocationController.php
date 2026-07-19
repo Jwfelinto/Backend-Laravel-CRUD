@@ -5,16 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\LocationResource;
 use App\Services\LocationService;
 use Illuminate\Http\Resources\Json\JsonResource;
-use OpenApi\Annotations as OA;
 
-/**
- * @OA\Schema(
- *     schema="LocationResource",
- *     type="object",
- *     @OA\Property(property="id", type="integer"),
- *     @OA\Property(property="name", type="string")
- * )
- */
 class LocationController extends Controller
 {
     private LocationService $locationService;
@@ -28,16 +19,7 @@ class LocationController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/locations",
-     *     tags={"Locations"},
-     *     summary="List all locations",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/LocationResource"))
-     *     )
-     * )
+     * @return JsonResource
      */
     public function index(): JsonResource
     {

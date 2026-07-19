@@ -5,37 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ToolResource;
 use App\Services\ToolService;
 use Illuminate\Http\Resources\Json\JsonResource;
-use OpenApi\Annotations as OA;
 
-/**
- * @OA\Tag(
- *     name="Tools",
- *     description="API Endpoints for Tools"
- * )
- * @OA\Schema(
- *     schema="ToolResource",
- *     type="object",
- *     title="Tool Resource",
- *     @OA\Property(
- *         property="id",
- *         type="integer",
- *         description="Tool ID"
- *     ),
- *     @OA\Property(
- *         property="name",
- *         type="string",
- *         description="Tool name"
- *     ),
- *     @OA\Property(
- *         property="description",
- *         type="string",
- *         description="Tool description"
- *     )
- * )
- * @OA\PathItem(
- *     path="/api/tools"
- * )
- */
 class ToolController extends Controller
 {
     private ToolService $toolService;
@@ -49,18 +19,6 @@ class ToolController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/tools",
-     *     tags={"Tools"},
-     *     summary="List all tools",
-     *     description="Return a list of all tools",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/ToolResource"))
-     *     )
-     * )
-     *
      * @return JsonResource
      */
     public function index(): JsonResource

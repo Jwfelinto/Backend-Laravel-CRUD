@@ -9,14 +9,7 @@ use App\Services\ProjectService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use OpenApi\Annotations as OA;
 
-/**
- * @OA\Tag(
- *     name="Projects",
- *     description="API Endpoints for Projects"
- * )
- */
 class ProjectController extends Controller
 {
     private const FILTERS = [
@@ -37,66 +30,8 @@ class ProjectController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/projects",
-     *     tags={"Projects"},
-     *     summary="List all projects",
-     *     description="Return a list of projects with optional filters",
-     *     @OA\Parameter(
-     *         name="client",
-     *         in="query",
-     *         description="Filter by client",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="location",
-     *         in="query",
-     *         description="Filter by location",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="installation_type",
-     *         in="query",
-     *         description="Filter by installation type",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="tools",
-     *         in="query",
-     *         description="Filter by tools",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="date",
-     *         in="query",
-     *         description="Filter by date",
-     *         required=false,
-     *         @OA\Schema(type="string", format="date")
-     *     ),
-     *     @OA\Parameter(
-     *         name="start_date",
-     *         in="query",
-     *         description="Filter by start date",
-     *         required=false,
-     *         @OA\Schema(type="string", format="date")
-     *     ),
-     *     @OA\Parameter(
-     *         name="end_date",
-     *         in="query",
-     *         description="Filter by end date",
-     *         required=false,
-     *         @OA\Schema(type="string", format="date")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/ProjectResource"))
-     *     )
-     * )
+     * @param  Request  $request
+     * @return JsonResource
      */
     public function index(Request $request): JsonResource
     {
@@ -107,24 +42,8 @@ class ProjectController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/projects/{project}",
-     *     tags={"Projects"},
-     *     summary="Show a project",
-     *     description="Return a single project",
-     *     @OA\Parameter(
-     *         name="project",
-     *         in="path",
-     *         description="ID of the project to retrieve",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/ProjectResource")
-     *     )
-     * )
+     * @param  Project  $project
+     * @return JsonResource
      */
     public function show(Project $project): JsonResource
     {
@@ -132,32 +51,8 @@ class ProjectController extends Controller
     }
 
     /**
-     * @OA\Post(
-     *     path="/api/projects",
-     *     tags={"Projects"},
-     *     summary="Create a new project",
-     *     description="Create a new project",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/ProjectRequest")
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Project successfully created",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Project successfully created!"),
-     *             @OA\Property(property="data", ref="#/components/schemas/ProjectResource")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation error",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Erro de validação"),
-     *             @OA\Property(property="errors", type="object")
-     *         )
-     *     )
-     * )
+     * @param  ProjectRequest  $request
+     * @return JsonResponse
      */
     public function store(ProjectRequest $request): JsonResponse
     {
@@ -170,39 +65,9 @@ class ProjectController extends Controller
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/projects/{project}",
-     *     tags={"Projects"},
-     *     summary="Update an existing project",
-     *     description="Update an existing project",
-     *     @OA\Parameter(
-     *         name="project",
-     *         in="path",
-     *         description="ID of the project to update",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/ProjectRequest")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Project successfully updated",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Project successfully updated!"),
-     *             @OA\Property(property="data", ref="#/components/schemas/ProjectResource")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation error",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Erro de validação"),
-     *             @OA\Property(property="errors", type="object")
-     *         )
-     *     )
-     * )
+     * @param  ProjectRequest  $request
+     * @param  Project  $project
+     * @return JsonResponse
      */
     public function update(ProjectRequest $request, Project $project): JsonResponse
     {
@@ -215,30 +80,8 @@ class ProjectController extends Controller
     }
 
     /**
-     * @OA\Delete(
-     *     path="/api/projects/{project}",
-     *     tags={"Projects"},
-     *     summary="Delete a project",
-     *     description="Delete a project by its ID",
-     *     @OA\Parameter(
-     *         name="project",
-     *         in="path",
-     *         description="ID of the project to delete",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=204,
-     *         description="Project successfully deleted"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Project not found",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Project not found")
-     *         )
-     *     )
-     * )
+     * @param  Project  $project
+     * @return JsonResponse
      */
     public function destroy(Project $project): JsonResponse
     {
