@@ -35,7 +35,7 @@ class ProjectService
     {
         $project = new Project($data);
 
-        return $this->projectRepository->create(
+        return $this->projectRepository->save(
             $project,
             $this->formatTools($data['tools'])
         );
@@ -45,7 +45,7 @@ class ProjectService
     {
         $project->fill($data);
 
-        return $this->projectRepository->update(
+        return $this->projectRepository->save(
             $project,
             $this->formatTools($data['tools'])
         );
