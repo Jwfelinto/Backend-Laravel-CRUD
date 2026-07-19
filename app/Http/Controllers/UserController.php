@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
@@ -20,7 +21,6 @@ class UserController extends Controller
         'name',
         'email'
     ];
-
     /**
      * @var UserService
      */
@@ -47,10 +47,10 @@ class UserController extends Controller
     }
 
     /**
-     * @param UserRequest $request
+     * @param StoreUserRequest $request
      * @return JsonResponse
      */
-    public function register(UserRequest $request): JsonResponse
+    public function register(StoreUserRequest $request): JsonResponse
     {
         $users = $this->userService->registerUser($request->validated());
 
@@ -70,11 +70,11 @@ class UserController extends Controller
     }
 
     /**
-     * @param UserRequest $request
+     * @param UpdateUserRequest $request
      * @param User $user
      * @return JsonResponse
      */
-    public function update(UserRequest $request, User $user): JsonResponse
+    public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
         $user = $this->userService->updateUser($request->validated(), $user);
 
@@ -90,7 +90,7 @@ class UserController extends Controller
      */
     public function destroy(User $user): JsonResponse
     {
-       $this->userService->deleteUser($user);
+        $this->userService->deleteUser($user);
 
         return response()->json([
             'message' => 'User successfully deleted',
