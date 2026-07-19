@@ -10,17 +10,11 @@ class LocationController extends Controller
 {
     private LocationService $locationService;
 
-    /**
-     * @param LocationService $locationService
-     */
     public function __construct(LocationService $locationService)
     {
         $this->locationService = $locationService;
     }
 
-    /**
-     * @return JsonResource
-     */
     public function index(): JsonResource
     {
         $locations = $this->locationService->getAll();

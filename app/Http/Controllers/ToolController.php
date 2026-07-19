@@ -10,17 +10,11 @@ class ToolController extends Controller
 {
     private ToolService $toolService;
 
-    /**
-     * @param ToolService $toolService
-     */
     public function __construct(ToolService $toolService)
     {
         $this->toolService = $toolService;
     }
 
-    /**
-     * @return JsonResource
-     */
     public function index(): JsonResource
     {
         $tools = $this->toolService->getAll();

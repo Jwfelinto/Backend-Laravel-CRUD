@@ -20,20 +20,14 @@ class ClientController extends Controller
         'phone',
         'cpf_cnpj',
     ];
+
     private ClientService $clientService;
 
-    /**
-     * @param ClientService $clientService
-     */
     public function __construct(ClientService $clientService)
     {
         $this->clientService = $clientService;
     }
 
-    /**
-     * @param Request $request
-     * @return JsonResource
-     */
     public function index(Request $request): JsonResource
     {
         $filters = $request->only(self::FILTERS);
@@ -42,10 +36,6 @@ class ClientController extends Controller
         return ClientsResource::collection($clients);
     }
 
-    /**
-     * @param Client $client
-     * @return JsonResource
-     */
     public function show(Client $client): JsonResource
     {
         $client->load('projects.installationType');
@@ -53,10 +43,6 @@ class ClientController extends Controller
         return new ClientResource($client);
     }
 
-    /**
-     * @param StoreClientRequest $request
-     * @return JsonResponse
-     */
     public function store(StoreClientRequest $request): JsonResponse
     {
         $result = $this->clientService->createClient($request->validated());
@@ -67,11 +53,6 @@ class ClientController extends Controller
         ], 201);
     }
 
-    /**
-     * @param UpdateClientRequest $request
-     * @param Client $client
-     * @return JsonResponse
-     */
     public function update(Client $client, UpdateClientRequest $request): JsonResponse
     {
         $result = $this->clientService->updateClient($client, $request->validated());
@@ -82,10 +63,6 @@ class ClientController extends Controller
         ]);
     }
 
-    /**
-     * @param Client $client
-     * @return JsonResponse
-     */
     public function destroy(Client $client): JsonResponse
     {
         $client->delete();

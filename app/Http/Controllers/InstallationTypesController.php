@@ -10,17 +10,11 @@ class InstallationTypesController extends Controller
 {
     private InstallationTypeService $installationService;
 
-    /**
-     * @param InstallationTypeService $installationService
-     */
     public function __construct(InstallationTypeService $installationService)
     {
         $this->installationService = $installationService;
     }
 
-    /**
-     * @return JsonResource
-     */
     public function index(): JsonResource
     {
         $installationTypes = $this->installationService->getAll();

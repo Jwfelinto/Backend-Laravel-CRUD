@@ -10,21 +10,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class ProjectRepository implements ProjectRepositoryInterface
 {
     private Project $projects;
-    /**
-     * @param Project $projects
-     */
-    /**
-     * @param Project $projects
-     */
+
     public function __construct(Project $projects)
     {
         $this->projects = $projects;
     }
 
-    /**
-     * @param array|null $filters
-     * @return LengthAwarePaginator
-     */
     public function all(?array $filters): LengthAwarePaginator
     {
         $pagination = request('pagination', 10);
@@ -35,11 +26,6 @@ class ProjectRepository implements ProjectRepositoryInterface
         return $result->latest()->paginate(fn($total) => $pagination == '0' ? $total : $pagination);
     }
 
-    /**
-     * @param Project $project
-     * @param array $tools
-     * @return Project
-     */
     public function save(Project $project, array $tools): Project
     {
         $project->save();
@@ -50,11 +36,6 @@ class ProjectRepository implements ProjectRepositoryInterface
         return $project;
     }
 
-    /**
-     * @param Builder $query
-     * @param array $filters
-     * @return Builder
-     */
     private function applyFilters(Builder $query, array $filters): Builder
     {
         $this->filterClient($query, $filters);
@@ -67,11 +48,6 @@ class ProjectRepository implements ProjectRepositoryInterface
         return $query;
     }
 
-    /**
-     * @param Builder $query
-     * @param array|null $filters
-     * @return void
-     */
     private function filterDate(Builder $query, ?array $filters): void
     {
         $query->when(! empty($filters['date']), function (Builder $query, $filters) {
@@ -79,11 +55,6 @@ class ProjectRepository implements ProjectRepositoryInterface
         });
     }
 
-    /**
-     * @param Builder $query
-     * @param array|null $filters
-     * @return void
-     */
     private function filterBetweenDate(Builder $query, ?array $filters): void
     {
         $query
@@ -95,11 +66,6 @@ class ProjectRepository implements ProjectRepositoryInterface
             });
     }
 
-    /**
-     * @param Builder $query
-     * @param array|null $filters
-     * @return void
-     */
     private function filterTools(Builder $query, ?array $filters): void
     {
         $query->when(! empty($filters['tools']), function (Builder $query) use ($filters) {
@@ -111,11 +77,6 @@ class ProjectRepository implements ProjectRepositoryInterface
         });
     }
 
-    /**
-     * @param Builder $query
-     * @param array|null $filters
-     * @return void
-     */
     private function filterLocation(Builder $query, ?array $filters): void
     {
         $query->when(! empty($filters['location']), function (Builder $query, $filters) {
@@ -123,11 +84,6 @@ class ProjectRepository implements ProjectRepositoryInterface
         });
     }
 
-    /**
-     * @param Builder $query
-     * @param array|null $filters
-     * @return void
-     */
     private function filterClient(Builder $query, ?array $filters): void
     {
         $query->when(! empty($filters['client']), function (Builder $query, $filters) {
@@ -135,11 +91,6 @@ class ProjectRepository implements ProjectRepositoryInterface
         });
     }
 
-    /**
-     * @param Builder $query
-     * @param array|null $filters
-     * @return void
-     */
     private function filterInstallationsType(Builder $query, ?array $filters): void
     {
         $query->when(! empty($filters['installation_type']), function (Builder $query, $filters) {

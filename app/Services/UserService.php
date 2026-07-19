@@ -23,14 +23,14 @@ class UserService
 
     public function registerUser(array $data): User
     {
-        return $this->userRepository->create(
+        return $this->userRepository->save(
             $this->fillUser(new User(), $data)
         );
     }
 
     public function updateUser(array $data, User $user): User
     {
-        return $this->userRepository->update(
+        return $this->userRepository->save(
             $this->fillUser($user, $data)
         );
     }

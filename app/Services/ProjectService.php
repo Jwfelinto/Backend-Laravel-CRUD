@@ -10,27 +10,16 @@ class ProjectService
 {
     private ProjectRepositoryInterface $projectRepository;
 
-    /**
-     * @param ProjectRepositoryInterface $projectRepository
-     */
     public function __construct(ProjectRepositoryInterface $projectRepository)
     {
         $this->projectRepository = $projectRepository;
     }
 
-    /**
-     * @param array|null $data
-     * @return LengthAwarePaginator
-     */
     public function getProjects(?array $data): LengthAwarePaginator
     {
         return $this->projectRepository->all($data);
     }
 
-    /**
-     * @param array $data
-     * @return Project
-     */
     public function createProject(array $data): Project
     {
         $project = new Project($data);

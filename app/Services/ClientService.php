@@ -11,27 +11,16 @@ class ClientService
 {
     private ClientRepositoryInterface $clientRepository;
 
-    /**
-     * @param ClientRepositoryInterface $clientRepository
-     */
     public function __construct(ClientRepositoryInterface $clientRepository)
     {
         $this->clientRepository = $clientRepository;
     }
 
-    /**
-     * @param $filters
-     * @return LengthAwarePaginator
-     */
     public function getAll($filters): LengthAwarePaginator
     {
         return $this->clientRepository->all($filters);
     }
 
-    /**
-     * @param array $data
-     * @return Client
-     */
     public function createClient(array $data): Client
     {
         $client = new Client($data);
@@ -39,11 +28,6 @@ class ClientService
         return $this->clientRepository->save($client);
     }
 
-    /**
-     * @param array $data
-     * @param Client $client
-     * @return Client
-     */
     public function updateClient(Client $client, array $data): Client
     {
         $client->fill($data);
@@ -51,10 +35,6 @@ class ClientService
         return $this->clientRepository->save($client);
     }
 
-    /**
-     * @param Client $client
-     * @return JsonResponse
-     */
     public function delete(Client $client): JsonResponse
     {
         $client->delete();

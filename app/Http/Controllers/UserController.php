@@ -15,30 +15,18 @@ use Illuminate\Routing\Controller;
 
 class UserController extends Controller
 {
-    /**
-     * @var array
-     */
     const FILTERS = [
         'name',
         'email'
     ];
-    /**
-     * @var UserService
-     */
+
     private UserService $userService;
 
-    /**
-     * @param UserService $userService
-     */
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
     }
 
-    /**
-     * @param Request $request
-     * @return JsonResource
-     */
     public function index(Request $request): JsonResource
     {
         $filters = $request->only(self::FILTERS);
@@ -47,10 +35,6 @@ class UserController extends Controller
         return UsersResource::collection($users);
     }
 
-    /**
-     * @param StoreUserRequest $request
-     * @return JsonResponse
-     */
     public function register(StoreUserRequest $request): JsonResponse
     {
         $users = $this->userService->registerUser($request->validated());
@@ -61,20 +45,11 @@ class UserController extends Controller
         ], 201);
     }
 
-    /**
-     * @param User $user
-     * @return JsonResource
-     */
     public function show(User $user): JsonResource
     {
         return new UserResource($user);
     }
 
-    /**
-     * @param UpdateUserRequest $request
-     * @param User $user
-     * @return JsonResponse
-     */
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
         $user = $this->userService->updateUser($request->validated(), $user);
@@ -85,10 +60,6 @@ class UserController extends Controller
         ], 200);
     }
 
-    /**
-     * @param User $user
-     * @return JsonResponse
-     */
     public function destroy(User $user): JsonResponse
     {
         $this->userService->deleteUser($user);
