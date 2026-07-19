@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UsersResource;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
@@ -43,7 +44,7 @@ class UserController extends Controller
         $filters = $request->only(self::FILTERS);
         $users = $this->userService->getAll($filters);
 
-        return UserResource::collection($users);
+        return UsersResource::collection($users);
     }
 
     /**
