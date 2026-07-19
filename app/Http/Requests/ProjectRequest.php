@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
 
-class ProjectRequest extends FormRequest
+class ProjectRequest extends BaseFormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -21,7 +20,6 @@ class ProjectRequest extends FormRequest
             'tools' => 'required|array',
             'tools.*.id' => 'required|exists:tools,id',
             'tools.*.quantity' => 'required|integer|min:1',
-
         ];
     }
 }
