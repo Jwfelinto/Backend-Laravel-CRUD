@@ -36,7 +36,7 @@ class ClientService
     {
         $client = new Client($data);
 
-        return $this->clientRepository->create($client);
+        return $this->clientRepository->save($client);
     }
 
     /**
@@ -46,12 +46,9 @@ class ClientService
      */
     public function updateClient(array $data, Client $client): Client
     {
-        $client->name = $data['name'];
-        $client->email = $data['email'];
-        $client->phone = $data['phone'];
-        $client->cpf_cnpj = $data['cpf_cnpj'];
+        $client->fill($data);
 
-        return $this->clientRepository->update($client);
+        return $this->clientRepository->save($client);
     }
 
     /**
