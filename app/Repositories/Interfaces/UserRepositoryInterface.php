@@ -7,21 +7,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface UserRepositoryInterface
 {
-    /**
-     * @param array|null $filters
-     * @return LengthAwarePaginator
-     */
     public function all(?array $filters): LengthAwarePaginator;
-
-    /**
-     * @param User $user
-     * @return User
-     */
-    public function create(User $user):User;
-
-    /**
-     * @param User $user
-     * @return User
-     */
-    public function update(User $user): User;
+    public function save(User $user):User;
 }
