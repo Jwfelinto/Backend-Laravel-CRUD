@@ -10,7 +10,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class ProjectRepository implements ProjectRepositoryInterface
 {
     private Project $projects;
-
     /**
      * @param Project $projects
      */
@@ -33,7 +32,7 @@ class ProjectRepository implements ProjectRepositoryInterface
         $query = $this->projects->with(['client', 'location', 'tools', 'installationType']);
         $result = $this->applyFilters($query, $filters);
 
-        return $result->latest()->paginate(fn ($total) => $pagination == '0' ? $total : $pagination);
+        return $result->latest()->paginate(fn($total) => $pagination == '0' ? $total : $pagination);
     }
 
     /**
@@ -69,7 +68,7 @@ class ProjectRepository implements ProjectRepositoryInterface
      */
     private function applyFilters(Builder $query, array $filters): Builder
     {
-        $query = $this->filterClient($query, $filters['client']);
+        $this->filterClient($query, $filters);
         $query = $this->filterLocation($query, $filters['location']);
         $query = $this->filterInstallationsType($query, $filters['installation_type']);
         $query = $this->filterTools($query, $filters['tools']);
@@ -115,11 +114,12 @@ class ProjectRepository implements ProjectRepositoryInterface
     private function filterTools(Builder $query, ?string $tools): Builder
     {
         return $query->when($tools, function (Builder $query) use ($tools) {
-                $toolsIds = explode(',', $tools);
-                return $query->whereHas('tools', function (Builder $toolsQuery) use ($toolsIds) {
-                    $toolsQuery->whereIn('tools.id', $toolsIds);
-                });
+            $toolsIds = explode(',', $tools);
+
+            return $query->whereHas('tools', function (Builder $toolsQuery) use ($toolsIds) {
+                $toolsQuery->whereIn('tools.id', $toolsIds);
             });
+        });
     }
 
     /**
@@ -136,13 +136,13 @@ class ProjectRepository implements ProjectRepositoryInterface
 
     /**
      * @param Builder $query
-     * @param int|null $client
-     * @return Builder
+     * @param array|null $filters
+     * @return void
      */
-    private function filterClient(Builder $query, ?int $client): Builder
+    private function filterClient(Builder $query, ?array $filters): void
     {
-        return $query->when($client, function (Builder $query, $client) {
-            return $query->where('client_id', $client);
+        $query->when(! empty($filters['client']), function (Builder $query, $filters) {
+            $query->where('client_id', $filters['client']);
         });
     }
 
