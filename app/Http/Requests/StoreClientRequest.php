@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class ClientRequest extends FormRequest
+class StoreClientRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
