@@ -1,8 +1,11 @@
 # Backend Laravel CRUD
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 
-Este projeto é uma API desenvolvida em Laravel para gerenciamento de **Projetos** de energia solar, com funcionalidades  CRUD (Create, Read, Update, Delete). Ele segue uma arquitetura baseada em **Service**, **Repository** e **Interface**, garantindo uma separação clara das responsabilidades e um código mais organizado.
+Este projeto é uma API desenvolvida em Laravel para gerenciamento de **Projetos** de energia solar, com funcionalidades
+CRUD (Create, Read, Update, Delete). Ele segue uma arquitetura baseada em **Service**, **Repository** e **Interface**,
+garantindo uma separação clara das responsabilidades e um código mais organizado.
 
 ## Requisitos
 
@@ -51,29 +54,6 @@ php artisan key:generate
 php artisan migrate --seed
 ```
 
-
-## Documentação da API
-
-A documentação da API foi gerada utilizando o pacote **Swagger**. Para acessar a documentação, siga os passos abaixo:
-
-1. Execute o comando para publicar a configuração do Swagger:
-
-```bash
-php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
-```
-
-2. Gere a documentação Swagger:
-
-```bash
-php artisan l5-swagger:generate
-```
-
-3. Acesse a documentação no navegador através do caminho:
-
-```
-http://localhost:9000/api/documentation
-```
-
 ## Estrutura do Projeto
 
 - **App/Services**: Contém as regras de negócio e lógica de aplicação.
@@ -93,7 +73,6 @@ php artisan test
 ```
 
 Atualmente, há testes para as models `Client`, `Project`, `Location`, `InstallationType`, `Tool` e `User`.
-
 
 ## Licença
 

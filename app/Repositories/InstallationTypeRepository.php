@@ -10,17 +10,11 @@ class InstallationTypeRepository implements InstallationTypeRepositoryInterface
 {
     private InstallationType $installationType;
 
-    /**
-     * @param InstallationType $installationType
-     */
     public function __construct(InstallationType $installationType)
     {
         $this->installationType = $installationType;
     }
 
-    /**
-     * @return LengthAwarePaginator
-     */
     public function all(): LengthAwarePaginator
     {
         $pagination = request('pagination', 10);

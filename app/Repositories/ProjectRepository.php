@@ -11,21 +11,11 @@ class ProjectRepository implements ProjectRepositoryInterface
 {
     private Project $projects;
 
-    /**
-     * @param Project $projects
-     */
-    /**
-     * @param Project $projects
-     */
     public function __construct(Project $projects)
     {
         $this->projects = $projects;
     }
 
-    /**
-     * @param array|null $filters
-     * @return LengthAwarePaginator
-     */
     public function all(?array $filters): LengthAwarePaginator
     {
         $pagination = request('pagination', 10);
@@ -33,128 +23,78 @@ class ProjectRepository implements ProjectRepositoryInterface
         $query = $this->projects->with(['client', 'location', 'tools', 'installationType']);
         $result = $this->applyFilters($query, $filters);
 
-        return $result->latest()->paginate(fn ($total) => $pagination == '0' ? $total : $pagination);
+        return $result->latest()->paginate(fn($total) => $pagination == '0' ? $total : $pagination);
     }
 
-    /**
-     * @param Project $project
-     * @param array $tools
-     * @return Project
-     */
-    public function create(Project $project, array $tools): Project
-    {
-        $project->save();
-        $project->tools()->attach($tools);
-
-        return $project;
-    }
-
-    /**
-     * @param Project $project
-     * @param array $tools
-     * @return Project
-     */
-    public function update(Project $project, array $tools): Project
+    public function save(Project $project, array $tools): Project
     {
         $project->save();
         $project->tools()->sync($tools);
 
+        $project->load('client', 'location', 'installationType', 'tools.pivot');
+
         return $project;
     }
 
-    /**
-     * @param Builder $query
-     * @param array $filters
-     * @return Builder
-     */
     private function applyFilters(Builder $query, array $filters): Builder
     {
-        $query = $this->filterClient($query, $filters['client']);
-        $query = $this->filterLocation($query, $filters['location']);
-        $query = $this->filterInstallationsType($query, $filters['installation_type']);
-        $query = $this->filterTools($query, $filters['tools']);
-        $query = $this->filterDate($query, $filters['date']);
-        $query = $this->filterBetweenDate($query, $filters['start_date'], $filters['end_date']);
+        $this->filterClient($query, $filters);
+        $this->filterLocation($query, $filters);
+        $this->filterInstallationsType($query, $filters);
+        $this->filterTools($query, $filters);
+        $this->filterDate($query, $filters);
+        $this->filterBetweenDate($query, $filters);
 
         return $query;
     }
 
-    /**
-     * @param Builder $query
-     * @param string|null $date
-     * @return Builder
-     */
-    private function filterDate(Builder $query, ?string $date): Builder
+    private function filterDate(Builder $query, ?array $filters): void
     {
-        return $query->when($date, function (Builder $query, $date) {
-            return $query->whereDate('created_at', date('Y-m-d', strtotime($date)));
+        $query->when(! empty($filters['date']), function (Builder $query, $filters) {
+            $query->whereDate('created_at', $filters['date']);
         });
     }
 
-    /**
-     * @param Builder $query
-     * @param string|null $startDate
-     * @param string|null $endDate
-     * @return Builder
-     */
-    private function filterBetweenDate(Builder $query, ?string $startDate, ?string $endDate): Builder
+    private function filterBetweenDate(Builder $query, ?array $filters): void
     {
-        return $query->when(($startDate) && ($endDate), function (Builder $query) use ($startDate, $endDate) {
-            $startDate = date('Y-m-d', strtotime($startDate));
-            $endDate = date('Y-m-d', strtotime($endDate));
-
-            return $query->whereBetween('created_at', [$startDate, $endDate . ' 23:59:59']);
-        });
-    }
-
-    /**
-     * @param Builder $query
-     * @param string|null $tools
-     * @return Builder
-     */
-    private function filterTools(Builder $query, ?string $tools): Builder
-    {
-        return $query->when($tools, function (Builder $query) use ($tools) {
-                $toolsIds = explode(',', $tools);
-                return $query->whereHas('tools', function (Builder $toolsQuery) use ($toolsIds) {
-                    $toolsQuery->whereIn('tools.id', $toolsIds);
-                });
+        $query
+            ->when(! empty($filters['start_date']), function (Builder $query) use ($filters) {
+                $query->whereDate('created_at', '>=', $filters['start_date']);
+            })
+            ->when(! empty($filters['end_date']), function (Builder $query) use ($filters) {
+                $query->whereDate('created_at', '<=', $filters['end_date']);
             });
     }
 
-    /**
-     * @param Builder $query
-     * @param int|null $location
-     * @return Builder
-     */
-    private function filterLocation(Builder $query, ?int $location): Builder
+    private function filterTools(Builder $query, ?array $filters): void
     {
-        return $query->when($location, function (Builder $query, $location) {
-            return $query->where('location_id', $location);
+        $query->when(! empty($filters['tools']), function (Builder $query) use ($filters) {
+            $toolsIds = explode(',', $filters['tools']);
+
+            $query->whereHas('tools', function (Builder $toolsQuery) use ($toolsIds) {
+                $toolsQuery->whereIn('tools.id', $toolsIds);
+            });
         });
     }
 
-    /**
-     * @param Builder $query
-     * @param int|null $client
-     * @return Builder
-     */
-    private function filterClient(Builder $query, ?int $client): Builder
+    private function filterLocation(Builder $query, ?array $filters): void
     {
-        return $query->when($client, function (Builder $query, $client) {
-            return $query->where('client_id', $client);
+        $query->when(! empty($filters['location']), function (Builder $query, $filters) {
+            $query->where('location_id', $filters['location']);
         });
     }
 
-    /**
-     * @param Builder $query
-     * @param int|null $installationType
-     * @return Builder
-     */
-    private function filterInstallationsType(Builder $query, ?int $installationType): Builder
+    private function filterClient(Builder $query, ?array $filters): void
     {
-        return $query->when($installationType, function (Builder $query, $installationType) {
-            return $query->where('installation_type_id', $installationType);
+        $query->when(! empty($filters['client']), function (Builder $query, $filters) {
+            $query->where('client_id', $filters['client']);
+        });
+    }
+
+    private function filterInstallationsType(Builder $query, ?array $filters): void
+    {
+        $query->when(! empty($filters['installation_type']), function (Builder $query, $filters) {
+            $query->where('installation_type_id', $filters['installation_type']);
         });
     }
 }
