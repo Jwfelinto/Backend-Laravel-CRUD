@@ -41,18 +41,7 @@ class ClientRepository implements ClientRepositoryInterface
      * @param Client $client
      * @return Client
      */
-    public function create(Client $client): Client
-    {
-        $client->save();
-
-        return $client;
-    }
-
-    /**
-     * @param Client $client
-     * @return Client
-     */
-    public function update(Client $client): Client
+    public function save(Client $client): Client
     {
         $client->save();
 

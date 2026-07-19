@@ -17,11 +17,5 @@ interface ClientRepositoryInterface
      * @param Client $client
      * @return Client
      */
-    public function create(Client $client):Client;
-
-    /**
-     * @param Client $client
-     * @return Client
-     */
-    public function update(Client $client): Client;
+    public function save(Client $client):Client;
 }
