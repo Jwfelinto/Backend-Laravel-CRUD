@@ -72,7 +72,7 @@ class ProjectRepository implements ProjectRepositoryInterface
         $this->filterLocation($query, $filters);
         $this->filterInstallationsType($query, $filters);
         $this->filterTools($query, $filters);
-        $this->filterDate($query, $filters['date']);
+        $this->filterDate($query, $filters);
         $this->filterBetweenDate($query, $filters['start_date'], $filters['end_date']);
 
         return $query;
@@ -80,13 +80,13 @@ class ProjectRepository implements ProjectRepositoryInterface
 
     /**
      * @param Builder $query
-     * @param string|null $date
-     * @return Builder
+     * @param array|null $filters
+     * @return void
      */
-    private function filterDate(Builder $query, ?string $date): Builder
+    private function filterDate(Builder $query, ?array $filters): void
     {
-        return $query->when($date, function (Builder $query, $date) {
-            return $query->whereDate('created_at', date('Y-m-d', strtotime($date)));
+        $query->when(! empty($filters['date']), function (Builder $query, $filters) {
+            $query->whereDate('created_at', date('Y-m-d', strtotime($filters['date'])));
         });
     }
 
