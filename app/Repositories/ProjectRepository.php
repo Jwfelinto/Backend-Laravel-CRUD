@@ -71,9 +71,9 @@ class ProjectRepository implements ProjectRepositoryInterface
         $this->filterClient($query, $filters);
         $this->filterLocation($query, $filters);
         $this->filterInstallationsType($query, $filters);
-        $query = $this->filterTools($query, $filters['tools']);
-        $query = $this->filterDate($query, $filters['date']);
-        $query = $this->filterBetweenDate($query, $filters['start_date'], $filters['end_date']);
+        $this->filterTools($query, $filters);
+        $this->filterDate($query, $filters['date']);
+        $this->filterBetweenDate($query, $filters['start_date'], $filters['end_date']);
 
         return $query;
     }
@@ -108,15 +108,15 @@ class ProjectRepository implements ProjectRepositoryInterface
 
     /**
      * @param Builder $query
-     * @param string|null $tools
-     * @return Builder
+     * @param array|null $filters
+     * @return void
      */
-    private function filterTools(Builder $query, ?string $tools): Builder
+    private function filterTools(Builder $query, ?array $filters): void
     {
-        return $query->when($tools, function (Builder $query) use ($tools) {
-            $toolsIds = explode(',', $tools);
+        $query->when(! empty($filters['tools']), function (Builder $query) use ($filters) {
+            $toolsIds = explode(',', $filters['tools']);
 
-            return $query->whereHas('tools', function (Builder $toolsQuery) use ($toolsIds) {
+            $query->whereHas('tools', function (Builder $toolsQuery) use ($toolsIds) {
                 $toolsQuery->whereIn('tools.id', $toolsIds);
             });
         });
