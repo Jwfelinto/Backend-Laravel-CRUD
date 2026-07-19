@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ToolResource;
+use App\Http\Resources\ToolsResource;
 use App\Services\ToolService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,6 +25,6 @@ class ToolController extends Controller
     {
         $tools = $this->toolService->getAll();
 
-        return ToolResource::collection($tools);
+        return ToolsResource::collection($tools);
     }
 }
