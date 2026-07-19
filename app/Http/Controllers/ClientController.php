@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ClientRequest;
+use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\ClientsResource;
 use App\Models\Client;
@@ -10,7 +11,6 @@ use App\Services\ClientService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use OpenApi\Annotations as OA;
 
 class ClientController extends Controller
 {
@@ -20,11 +20,10 @@ class ClientController extends Controller
         'phone',
         'cpf_cnpj',
     ];
-
     private ClientService $clientService;
 
     /**
-     * @param  ClientService  $clientService
+     * @param ClientService $clientService
      */
     public function __construct(ClientService $clientService)
     {
@@ -32,7 +31,7 @@ class ClientController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      * @return JsonResource
      */
     public function index(Request $request): JsonResource
@@ -44,7 +43,7 @@ class ClientController extends Controller
     }
 
     /**
-     * @param  Client  $client
+     * @param Client $client
      * @return JsonResource
      */
     public function show(Client $client): JsonResource
@@ -55,10 +54,10 @@ class ClientController extends Controller
     }
 
     /**
-     * @param  ClientRequest  $request
+     * @param StoreClientRequest $request
      * @return JsonResponse
      */
-    public function store(ClientRequest $request): JsonResponse
+    public function store(StoreClientRequest $request): JsonResponse
     {
         $result = $this->clientService->createClient($request->validated());
 
@@ -69,13 +68,13 @@ class ClientController extends Controller
     }
 
     /**
-     * @param  ClientRequest  $request
-     * @param  Client  $client
+     * @param UpdateClientRequest $request
+     * @param Client $client
      * @return JsonResponse
      */
-    public function update(ClientRequest $request, Client $client): JsonResponse
+    public function update(Client $client, UpdateClientRequest $request): JsonResponse
     {
-        $result = $this->clientService->updateClient($request->validated(), $client);
+        $result = $this->clientService->updateClient($client, $request->validated());
 
         return response()->json([
             'message' => 'Client successfully updated!',
@@ -84,7 +83,7 @@ class ClientController extends Controller
     }
 
     /**
-     * @param  Client  $client
+     * @param Client $client
      * @return JsonResponse
      */
     public function destroy(Client $client): JsonResponse

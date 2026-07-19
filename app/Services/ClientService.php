@@ -44,7 +44,7 @@ class ClientService
      * @param Client $client
      * @return Client
      */
-    public function updateClient(array $data, Client $client): Client
+    public function updateClient(Client $client, array $data): Client
     {
         $client->fill($data);
 
