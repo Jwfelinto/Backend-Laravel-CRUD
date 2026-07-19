@@ -70,7 +70,7 @@ class ProjectRepository implements ProjectRepositoryInterface
     {
         $this->filterClient($query, $filters);
         $this->filterLocation($query, $filters);
-        $query = $this->filterInstallationsType($query, $filters['installation_type']);
+        $this->filterInstallationsType($query, $filters);
         $query = $this->filterTools($query, $filters['tools']);
         $query = $this->filterDate($query, $filters['date']);
         $query = $this->filterBetweenDate($query, $filters['start_date'], $filters['end_date']);
@@ -148,13 +148,13 @@ class ProjectRepository implements ProjectRepositoryInterface
 
     /**
      * @param Builder $query
-     * @param int|null $installationType
-     * @return Builder
+     * @param array|null $filters
+     * @return void
      */
-    private function filterInstallationsType(Builder $query, ?int $installationType): Builder
+    private function filterInstallationsType(Builder $query, ?array $filters): void
     {
-        return $query->when($installationType, function (Builder $query, $installationType) {
-            return $query->where('installation_type_id', $installationType);
+        $query->when(! empty($filters['installation_type']), function (Builder $query, $filters) {
+            $query->where('installation_type_id', $filters['installation_type']);
         });
     }
 }
