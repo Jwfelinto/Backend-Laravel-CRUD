@@ -60,10 +60,11 @@ class ClientController extends Controller
      */
     public function store(ClientRequest $request): JsonResponse
     {
-        $this->clientService->createClient($request->validated());
+        $result = $this->clientService->createClient($request->validated());
 
         return response()->json([
-            'message' => 'Client successfully created!'
+            'message' => 'Client successfully created!',
+            'data' => new ClientResource($result),
         ], 201);
     }
 
@@ -78,7 +79,7 @@ class ClientController extends Controller
 
         return response()->json([
             'message' => 'Client successfully updated!',
-            'data' => new ClientResource($result)
+            'data' => new ClientResource($result),
         ]);
     }
 
