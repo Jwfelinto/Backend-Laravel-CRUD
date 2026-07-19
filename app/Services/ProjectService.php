@@ -35,15 +35,10 @@ class ProjectService
     {
         $project = new Project($data);
 
-        $tools = [];
-        foreach ($data['tools'] as $tool) {
-            $tools[] = [
-                'tool_id' => $tool['id'],
-                'quantity' => $tool['quantity']
-            ];
-        }
-
-        return $this->projectRepository->create($project, $tools);
+        return $this->projectRepository->create(
+            $project,
+            $this->formatTools($data['tools'])
+        );
     }
 
     /**
