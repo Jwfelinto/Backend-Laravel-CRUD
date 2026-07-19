@@ -66,24 +66,7 @@ class ProjectService
                 'quantity' => $tool['quantity']
             ];
         }
+
         return $this->projectRepository->update($project, $tools);
-
-    }
-
-    /**
-     * @param array|null $data
-     * @return array
-     */
-    private function checkFilters(?array $data): array
-    {
-        return [
-            'client' => $data['client'] ?? null,
-            'location' => $data['location'] ?? null,
-            'installation_type' => $data['installation_type'] ?? null,
-            'tools' => $data['tools'] ?? null,
-            'date' => $data['date'] ?? null,
-            'start_date' => $data['start_date'] ?? null,
-            'end_date' => $data['end_date'] ?? null,
-        ];
     }
 }
