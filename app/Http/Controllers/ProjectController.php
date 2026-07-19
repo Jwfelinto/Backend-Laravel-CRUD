@@ -47,6 +47,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project): JsonResource
     {
+        $project->load('client', 'location', 'installationType', 'tools.pivot');
+
         return new ProjectResource($project);
     }
 
