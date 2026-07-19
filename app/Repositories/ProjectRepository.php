@@ -73,7 +73,7 @@ class ProjectRepository implements ProjectRepositoryInterface
         $this->filterInstallationsType($query, $filters);
         $this->filterTools($query, $filters);
         $this->filterDate($query, $filters);
-        $this->filterBetweenDate($query, $filters['start_date'], $filters['end_date']);
+        $this->filterBetweenDate($query, $filters);
 
         return $query;
     }
@@ -86,24 +86,24 @@ class ProjectRepository implements ProjectRepositoryInterface
     private function filterDate(Builder $query, ?array $filters): void
     {
         $query->when(! empty($filters['date']), function (Builder $query, $filters) {
-            $query->whereDate('created_at', date('Y-m-d', strtotime($filters['date'])));
+            $query->whereDate('created_at', $filters['date']);
         });
     }
 
     /**
      * @param Builder $query
-     * @param string|null $startDate
-     * @param string|null $endDate
-     * @return Builder
+     * @param array|null $filters
+     * @return void
      */
-    private function filterBetweenDate(Builder $query, ?string $startDate, ?string $endDate): Builder
+    private function filterBetweenDate(Builder $query, ?array $filters): void
     {
-        return $query->when(($startDate) && ($endDate), function (Builder $query) use ($startDate, $endDate) {
-            $startDate = date('Y-m-d', strtotime($startDate));
-            $endDate = date('Y-m-d', strtotime($endDate));
-
-            return $query->whereBetween('created_at', [$startDate, $endDate . ' 23:59:59']);
-        });
+        $query
+            ->when(! empty($filters['start_date']), function (Builder $query) use ($filters) {
+                $query->whereDate('created_at', '>=', $filters['start_date']);
+            })
+            ->when(! empty($filters['end_date']), function (Builder $query) use ($filters) {
+                $query->whereDate('created_at', '<=', $filters['end_date']);
+            });
     }
 
     /**
