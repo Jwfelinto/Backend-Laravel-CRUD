@@ -69,7 +69,7 @@ class ProjectRepository implements ProjectRepositoryInterface
     private function applyFilters(Builder $query, array $filters): Builder
     {
         $this->filterClient($query, $filters);
-        $query = $this->filterLocation($query, $filters['location']);
+        $this->filterLocation($query, $filters);
         $query = $this->filterInstallationsType($query, $filters['installation_type']);
         $query = $this->filterTools($query, $filters['tools']);
         $query = $this->filterDate($query, $filters['date']);
@@ -124,13 +124,13 @@ class ProjectRepository implements ProjectRepositoryInterface
 
     /**
      * @param Builder $query
-     * @param int|null $location
-     * @return Builder
+     * @param array|null $filters
+     * @return void
      */
-    private function filterLocation(Builder $query, ?int $location): Builder
+    private function filterLocation(Builder $query, ?array $filters): void
     {
-        return $query->when($location, function (Builder $query, $location) {
-            return $query->where('location_id', $location);
+        $query->when(! empty($filters['location']), function (Builder $query, $filters) {
+            $query->where('location_id', $filters['location']);
         });
     }
 
