@@ -8,25 +8,14 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
-    /**
-     * @param array $data
-     * @return JsonResponse
-     */
     public function checkLoginData(array $data): JsonResponse
     {
         $user = User::whereEmail($data['email'])->first();
 
-        if (!$user) {
+        if (!$user || !Hash::check($data['password'], $user->password)) {
 
             return response()->json([
-                'message' => 'User not found',
-            ], 401);
-        }
-
-        if (!Hash::check($data['password'], $user->password)) {
-
-            return response()->json([
-                'message' => 'Invalid password.',
+                'message' => 'Invalid credentials.',
             ], 401);
         }
 
@@ -44,18 +33,9 @@ class AuthService
         ]);
     }
 
-    /**
-     * @return JsonResponse
-     */
     public function logoutUser(): JsonResponse
     {
         $user = auth()->user();
-
-        if (!$user) {
-            return response()->json([
-                'message' => 'Invalid token.',
-            ]);
-        }
 
         $user->currentAccessToken()->delete();
 
