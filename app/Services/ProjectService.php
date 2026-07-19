@@ -67,4 +67,15 @@ class ProjectService
 
         return $this->projectRepository->update($project, $tools);
     }
+
+    private function formatTools(array $tools): array
+    {
+        return collect($tools)
+            ->mapWithKeys(fn($tool) => [
+                $tool['id'] => [
+                    'quantity' => $tool['quantity'],
+                ],
+            ])
+            ->toArray();
+    }
 }
