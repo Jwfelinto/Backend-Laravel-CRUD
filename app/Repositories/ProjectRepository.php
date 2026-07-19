@@ -40,23 +40,12 @@ class ProjectRepository implements ProjectRepositoryInterface
      * @param array $tools
      * @return Project
      */
-    public function create(Project $project, array $tools): Project
-    {
-        $project->save();
-        $project->tools()->attach($tools);
-
-        return $project;
-    }
-
-    /**
-     * @param Project $project
-     * @param array $tools
-     * @return Project
-     */
-    public function update(Project $project, array $tools): Project
+    public function save(Project $project, array $tools): Project
     {
         $project->save();
         $project->tools()->sync($tools);
+
+        $project->load('client', 'location', 'installationType', 'tools.pivot');
 
         return $project;
     }
