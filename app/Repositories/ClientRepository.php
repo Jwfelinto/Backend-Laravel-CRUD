@@ -45,6 +45,8 @@ class ClientRepository implements ClientRepositoryInterface
     {
         $client->save();
 
+        $client->load('projects.installationType');
+
         return $client;
     }
 
