@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientRequest;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\ClientsResource;
 use App\Models\Client;
 use App\Services\ClientService;
 use Illuminate\Http\JsonResponse;
@@ -39,7 +40,7 @@ class ClientController extends Controller
         $filters = $request->only(self::FILTERS);
         $clients = $this->clientService->getAll($filters);
 
-        return ClientResource::collection($clients);
+        return ClientsResource::collection($clients);
     }
 
     /**
