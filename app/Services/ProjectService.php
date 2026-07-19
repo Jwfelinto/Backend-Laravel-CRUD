@@ -41,26 +41,14 @@ class ProjectService
         );
     }
 
-    /**
-     * @param array $data
-     * @param Project $project
-     * @return Project
-     */
-    public function updateProject(array $data, Project $project)
+    public function updateProject(array $data, Project $project): Project
     {
-        $project->client_id = $data['client_id'];
-        $project->location_id = $data['location_id'];
-        $project->installation_type_id = $data['installation_type_id'];
+        $project->fill($data);
 
-        $tools = [];
-        foreach ($data['tools'] as $tool) {
-            $tools[] = [
-                'tool_id' => $tool['id'],
-                'quantity' => $tool['quantity']
-            ];
-        }
-
-        return $this->projectRepository->update($project, $tools);
+        return $this->projectRepository->update(
+            $project,
+            $this->formatTools($data['tools'])
+        );
     }
 
     private function formatTools(array $tools): array
