@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\ProjectsResource;
 use App\Models\Project;
 use App\Services\ProjectService;
 use Illuminate\Http\JsonResponse;
@@ -21,7 +22,6 @@ class ProjectController extends Controller
         'start_date',
         'end_date',
     ];
-
     private ProjectService $projectService;
 
     public function __construct(ProjectService $projectService)
@@ -30,7 +30,7 @@ class ProjectController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      * @return JsonResource
      */
     public function index(Request $request): JsonResource
@@ -38,11 +38,11 @@ class ProjectController extends Controller
         $filters = $request->only(self::FILTERS);
         $projects = $this->projectService->getProjects($filters);
 
-        return ProjectResource::collection($projects);
+        return ProjectsResource::collection($projects);
     }
 
     /**
-     * @param  Project  $project
+     * @param Project $project
      * @return JsonResource
      */
     public function show(Project $project): JsonResource
@@ -51,7 +51,7 @@ class ProjectController extends Controller
     }
 
     /**
-     * @param  ProjectRequest  $request
+     * @param ProjectRequest $request
      * @return JsonResponse
      */
     public function store(ProjectRequest $request): JsonResponse
@@ -65,8 +65,8 @@ class ProjectController extends Controller
     }
 
     /**
-     * @param  ProjectRequest  $request
-     * @param  Project  $project
+     * @param ProjectRequest $request
+     * @param Project $project
      * @return JsonResponse
      */
     public function update(ProjectRequest $request, Project $project): JsonResponse
@@ -80,7 +80,7 @@ class ProjectController extends Controller
     }
 
     /**
-     * @param  Project  $project
+     * @param Project $project
      * @return JsonResponse
      */
     public function destroy(Project $project): JsonResponse

@@ -21,7 +21,7 @@ class ClientResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'cpf_cnpj' => $this->cpf_cnpj,
-            'projects' => ProjectResource::collection($this->projects)
+            'projects' => ProjectsResource::collection($this->projects)
         ];
     }
 }
