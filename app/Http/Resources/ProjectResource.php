@@ -8,18 +8,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class ProjectResource extends JsonResource
 {
     /**
-     * @param  Request  $request
+     * @param Request $request
      * @return array
      */
     public function toArray(Request $request): array
     {
-        if ($request->routeIs(
-            'project.index',
-            'client.show'
-        )) {
-            return $this->toArrayCollection($request);
-        }
-
         return [
             'id' => $this->id,
             'client' => [
@@ -29,14 +22,6 @@ class ProjectResource extends JsonResource
             'location' => $this->location->uf,
             'installation_type' => $this->installationType->name,
             'tools' => ToolResource::collection($this->tools),
-        ];
-    }
-
-    private function toArrayCollection(Request $request): array
-    {
-        return [
-            'id' => $this->id,
-            'installation_type' => $this->installationType->name
         ];
     }
 }
