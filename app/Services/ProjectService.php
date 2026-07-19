@@ -24,9 +24,7 @@ class ProjectService
      */
     public function getProjects(?array $data): LengthAwarePaginator
     {
-        $filters = $this->checkFilters($data);
-
-        return $this->projectRepository->all($filters);
+        return $this->projectRepository->all($data);
     }
 
     /**
